@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="红曳的Blog" type="application/atom+xml" />
 
@@ -100,7 +102,7 @@
 <meta property="og:image" content="http://www.jjl1979.com/2017/01/05/Hexo+Github搭建BLOG/ssh.png">
 <meta property="og:image" content="http://www.jjl1979.com/2017/01/05/Hexo+Github搭建BLOG/yuming.png">
 <meta property="og:image" content="http://www.jjl1979.com/2017/01/05/Hexo+Github搭建BLOG/jiexi.png">
-<meta property="og:updated_time" content="2017-01-13T09:43:31.459Z">
+<meta property="og:updated_time" content="2017-01-13T09:47:32.354Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="红曳的Blog">
 <meta name="twitter:description" content="Hexo+github搭建自己的BLOG
@@ -501,7 +503,7 @@ git push origin master
 <p><img src="/2017/01/05/Hexo+Github搭建BLOG/cangku.png" alt=""></p>
 <p>接下来配置ssh_key,在之前的终端里输入：</p>
 <pre><code>ssh-keygen -t rsa -C &quot;Github的注册邮箱地址&quot;
-</code></pre><p>几次enter之后，会生成两个文件<strong>id_rsa</strong>和<strong>id_rsa.pub</strong>，用notepad或者ultraedit之类的编辑器打开<strong>id_rsa.pub</strong>，复制里面的内容，打开你的github：<a href="https://github.com/settings/keys，新建一个ssh" target="_blank" rel="external">https://github.com/settings/keys，新建一个ssh</a> key，Title自己定义，将刚刚复制的内容粘贴到Key输入框，点击Add SSH key即可。<br><img src="/2017/01/05/Hexo+Github搭建BLOG/ssh.png" alt=""></p>
+</code></pre><p>几次enter之后，会生成两个文件<strong>id_rsa</strong>和<strong>id_rsa.pub</strong>，用notepad或者ultraedit之类的编辑器打开<strong>id_rsa.pub</strong>，复制里面的内容，打开你的github：<a href="https://github.com/settings/keys,新建一个ssh" target="_blank" rel="external">https://github.com/settings/keys,新建一个ssh</a> key，Title自己定义，将刚刚复制的内容粘贴到Key输入框，点击Add SSH key即可。<br><img src="/2017/01/05/Hexo+Github搭建BLOG/ssh.png" alt=""></p>
 <pre><code>ssh -T git@github.com
 </code></pre><p>&emsp;该命令会判断你的SSH是否配置好，如果出现 You’ve successfully authenticated的语句，证明SSH配置成功。  </p>
 <h5 id="配置BLOG域名"><a href="#配置BLOG域名" class="headerlink" title="配置BLOG域名"></a>配置BLOG域名</h5><p>当然了，前提是你要有自己的域名，比如我的：www.jjl1979.com,之后在github上你的博客仓库里点击<code>create a new file here</code>,    在github.io后面跟CNAME,edit file内容为你的域名<br><img src="/2017/01/05/Hexo+Github搭建BLOG/yuming.png" alt="">  </p>
