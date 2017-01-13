@@ -73,6 +73,8 @@
 
 
 
+  
+
 
   <link rel="alternate" href="/atom.xml" title="红曳的Blog" type="application/atom+xml" />
 
@@ -102,7 +104,7 @@
 <meta property="og:image" content="http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/ssh.png">
 <meta property="og:image" content="http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/yuming.png">
 <meta property="og:image" content="http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/jiexi.png">
-<meta property="og:updated_time" content="2017-01-13T10:35:16.550Z">
+<meta property="og:updated_time" content="2017-01-13T10:47:32.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+github搭建自己的BLOG">
 <meta name="twitter:description" content="写在前面：&amp;ensp;&amp;ensp; 刚接触静态网页blog不久，在网上查了查，基本上有两种：jekyll和hexo，两者都支持markdown语法，可以在github上托管自己的网站，前者不被推荐应用在windows上，并且没有没有本地服务器，无法实现预览，而hexo刚好能满足上面的要求，并且简约的next主题我非常喜欢，所以尝试着应用了hexo，感觉不错，留作备用。
@@ -506,7 +508,7 @@ git push origin master
 </code></pre><p>几次enter之后，会生成两个文件<strong>id_rsa</strong>和<strong>id_rsa.pub</strong>，用notepad或者ultraedit之类的编辑器打开<strong>id_rsa.pub</strong>，复制里面的内容，打开你的github：<code>https://github.com/settings/keys</code>,新建一个ssh key，Title自己定义，将刚刚复制的内容粘贴到Key输入框，点击Add SSH key即可。<br><img src="/2017/01/13/Hexo+Github搭建BLOG/ssh.png" alt=""></p>
 <pre><code>ssh -T git@github.com
 </code></pre><p>&emsp;该命令会判断你的SSH是否配置好，如果出现 You’ve successfully authenticated的语句，证明SSH配置成功。  </p>
-<h5 id="配置BLOG域名"><a href="#配置BLOG域名" class="headerlink" title="配置BLOG域名"></a>配置BLOG域名</h5><p>当然了，前提是你要有自己的域名，比如我的：www.jjl1979.com,之后在github上你的博客仓库里点击<code>create a new file here</code>,    在github.io后面跟CNAME,edit file内容为你的域名<br><img src="/2017/01/13/Hexo+Github搭建BLOG/yuming.png" alt="">  </p>
+<h2 id="配置BLOG域名"><a href="#配置BLOG域名" class="headerlink" title="配置BLOG域名"></a>配置BLOG域名</h2><p>当然了，前提是你要有自己的域名，比如我的：www.jjl1979.com,之后在github上你的博客仓库里点击<code>create a new file here</code>,    在github.io后面跟CNAME,edit file内容为你的域名<br><img src="/2017/01/13/Hexo+Github搭建BLOG/yuming.png" alt="">  </p>
 <p>确认提交后点击<strong>download zip</strong>下载，解压里面的CNAME文件到hexo的source目录下，之后登陆域名网站配置你的域名，我用的是阿里域名  </p>
 <p>github的主机地址：  </p>
 <pre><code>$192.30.252.153  
@@ -728,7 +730,7 @@ feed:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo安装配置"><span class="nav-number">2.</span> <span class="nav-text">hexo安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github部署配置"><span class="nav-number">3.</span> <span class="nav-text">github部署配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置BLOG域名"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">配置BLOG域名</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo主题-next"><span class="nav-number">4.</span> <span class="nav-text">hexo主题-next</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关插件"><span class="nav-number">5.</span> <span class="nav-text">相关插件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo安装配置"><span class="nav-number">2.</span> <span class="nav-text">hexo安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github部署配置"><span class="nav-number">3.</span> <span class="nav-text">github部署配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置BLOG域名"><span class="nav-number">4.</span> <span class="nav-text">配置BLOG域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo主题-next"><span class="nav-number">5.</span> <span class="nav-text">hexo主题-next</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关插件"><span class="nav-number">6.</span> <span class="nav-text">相关插件</span></a></li></ol></div>
             
 
           </div>
