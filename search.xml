@@ -4,6 +4,210 @@
   
     
     <entry>
+      <title><![CDATA[Hexo+github搭建自己的BLOG]]></title>
+      <url>http://www.jjl1979.com/2017/01/13/Hexo+Github%E6%90%AD%E5%BB%BABLOG/</url>
+      <content type="html"><![CDATA[<p><strong>写在前面：</strong><br>&ensp;&ensp; 刚接触静态网页blog不久，在网上查了查，基本上有两种：jekyll和hexo，两者都支持markdown语法，可以在github上托管自己的网站，前者不被推荐应用在windows上，并且没有没有本地服务器，无法实现预览，而hexo刚好能满足上面的要求，并且简约的next主题我非常喜欢，所以尝试着应用了hexo，感觉不错，留作备用。</p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>安装git<br>  地址 <a href="https://git-scm.com/download/" target="_blank" rel="external">https://git-scm.com/download/</a>  </li>
+<li>安装node.JS<br>  下载：<a href="http://nodejs.org/download/" target="_blank" rel="external">http://nodejs.org/download/</a></li>
+</ul>
+<p>一般情况下，选择默认安装就可以了，安装之后可检查一下是否安装正确<br><img src="/2017/01/13/Hexo+Github搭建BLOG/git.png" alt=""> </p>
+<p>基本上环境已经建好了</p>
+<h2 id="hexo安装配置"><a href="#hexo安装配置" class="headerlink" title="hexo安装配置"></a>hexo安装配置</h2><p>先介绍一下常用命令</p>
+<pre><code>$ hexo n == hexo new#创建新文章
+$ hexo g == hexo generate   #生成静态文件
+$ hexo s == hexo server #本地服务器启动，可预览页面
+$ hexo d == hexo deploy #本地文件发布至github
+</code></pre><p>安装命令行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo-cli</div></pre></td></tr></table></figure>
+<p>本地新建个文件夹hexo（自命名），之后右键选择Git Bash Here打开git命令窗口，依次执行如下命令：  </p>
+<pre><code>hexo init
+npm install
+hexo clean
+hexo g 
+hexo s
+执行完上面的命令，就可以访问本地站点了http://localhost:4000/
+
+hexo的git扩展插件
+npm install hexo-deployer-git --save
+</code></pre><p>显示如下页面<br><img src="/2017/01/13/Hexo+Github搭建BLOG/hexo.png" alt="">  </p>
+<p>hexo文件夹内容包括：  </p>
+<pre><code>hexo/
+  |- node_modules/  # hexo需要的模块，不需要上传GitHub  
+  |- themes/# 主题文件，需要上传GitHub的dev分支  
+  |- sources/   # 博文md文件，需要上传GitHub的dev分支  
+  |- public/# 生成的静态页面，由hexo deploy自动上传到gh-page分支  
+  |- package.json   # 记录hexo需要的包信息，不需要上传GitHub  
+  |- _config.yml# 全局配置文件，需要上传GitHub的dev分支  
+  |- .gitignore # hexo生成默认的.gitignore，它已经配置好了不需要上传的hexo文件  
+</code></pre><p>接下来还需要修改hexo配置文件<code>_config.yml</code>  </p>
+<pre><code># Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: Hexo
+subtitle:
+description:
+author: John Doe
+language:
+timezone:
+
+# URL
+## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;
+url: http://yoursite.com
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace:
+
+# Category &amp; Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: landscape
+
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+  type:
+</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;最开始的部分这里可以根据个人意向进行调整，具体可参考<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">hexo配置文件</a>  </p>
+<p>&emsp;配置身份信息  </p>
+<pre><code>git config --global user.name &quot;yourname&quot;
+git config --global user.email &quot;youremail&quot;
+</code></pre><p>&emsp;现在hexo是3.0以上版本了，所以git要更改这里：</p>
+<pre><code># Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+&gt;   type: git
+&gt;   repo: git@github.com:wowchris/wochris.github.io.git
+&gt;   branch: master
+</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;在hexo目录命令行窗口输入：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo d</div></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;此时github部署已经完成，<br>值得一提的是有时候上面的命令执行后会出现各种各样的问题，这时候也可以使用git命令行来完成部署。  </p>
+<pre><code>cd  hexo  
+git clone https://github.com/wowchris/wowchris.github.io.git .deploy/wochris.github.io
+mkdir .deploy  （存放clone code）
+
+vim deploy.sh
+复制下面内容到脚本里
+
+hexo generate
+cp -R public/* .deploy/wowchris.github.io
+cd .deploy/wowchris.github.io
+git add .
+git commit -m &quot;update&quot;
+git push origin master
+
+---
+</code></pre><p>这里说一下：命令行方式获取和github上下载的zip文件没有区别，只是获取方式不同而已，看个人习惯了<br>每次部署时执行deploy.sh即可。</p>
+<h2 id="github部署配置"><a href="#github部署配置" class="headerlink" title="github部署配置"></a>github部署配置</h2><p>登陆github，注册一个用户，创建一个专门用来放置博客的仓库，Repository name命名格式为your_name.github.io，我的是wowchris.github.io,这样github仓库就算建好了，但是还没有内容。</p>
+<p><img src="/2017/01/13/Hexo+Github搭建BLOG/cangku.png" alt=""></p>
+<p>接下来配置ssh_key,在之前的终端里输入：</p>
+<pre><code>ssh-keygen -t rsa -C &quot;Github的注册邮箱地址&quot;
+</code></pre><p>几次enter之后，会生成两个文件<strong>id_rsa</strong>和<strong>id_rsa.pub</strong>，用notepad或者ultraedit之类的编辑器打开<strong>id_rsa.pub</strong>，复制里面的内容，打开你的github：<code>https://github.com/settings/keys</code>,新建一个ssh key，Title自己定义，将刚刚复制的内容粘贴到Key输入框，点击Add SSH key即可。<br><img src="/2017/01/13/Hexo+Github搭建BLOG/ssh.png" alt=""></p>
+<pre><code>ssh -T git@github.com
+</code></pre><p>&emsp;该命令会判断你的SSH是否配置好，如果出现 You’ve successfully authenticated的语句，证明SSH配置成功。  </p>
+<h5 id="配置BLOG域名"><a href="#配置BLOG域名" class="headerlink" title="配置BLOG域名"></a>配置BLOG域名</h5><p>当然了，前提是你要有自己的域名，比如我的：www.jjl1979.com,之后在github上你的博客仓库里点击<code>create a new file here</code>,    在github.io后面跟CNAME,edit file内容为你的域名<br><img src="/2017/01/13/Hexo+Github搭建BLOG/yuming.png" alt="">  </p>
+<p>确认提交后点击<strong>download zip</strong>下载，解压里面的CNAME文件到hexo的source目录下，之后登陆域名网站配置你的域名，我用的是阿里域名  </p>
+<p>github的主机地址：  </p>
+<pre><code>$192.30.252.153  
+$192.30.252.154
+</code></pre><p><strong>设置域名解析</strong><br><img src="/2017/01/13/Hexo+Github搭建BLOG/jiexi.png" alt="">  </p>
+<p>几分钟后，域名就可以正常访问了。  </p>
+<h2 id="hexo主题-next"><a href="#hexo主题-next" class="headerlink" title="hexo主题-next"></a>hexo主题-next</h2><p>搜了搜hexo的主题，最后选了hexo，原因就是因为它简洁，干净。</p>
+<p>首先cd到你的hexo目录<br>clone Next代码并存放到 themes/next 目录下</p>
+<pre><code>git clone https://github.com/iissnan/hexo-theme-next themes/next
+</code></pre><p>修改配置文件<code>_config.yml</code></p>
+<pre><code>theme: next
+</code></pre><p>这里有一点值得注意，hexo的配置文件在开头部分，如果应用了<code>next</code>主题，那么配置文件要改成这样：</p>
+<pre><code>language: zh-Hans
+timezone: Asia/Shanghai
+</code></pre><p>n每个主题都有自己的独立配置文件，路径为 your_hexo/thems/next，详细内容可参见<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">next文档说明</a></p>
+<h2 id="相关插件"><a href="#相关插件" class="headerlink" title="相关插件"></a>相关插件</h2><p><strong>1. hexo-asset-image-本地图片处理</strong><br>确认_config.yml中状态<code>post_asset_folder: true</code><br>在git bash中执行：  </p>
+<pre><code>npm install https://github.com/CodeFalling/hexo-asset-image --save
+</code></pre><p>在hexo/source/_posts下创建一个和md文件同名的文件夹，放进需要的图片，然后在md中插入：  </p>
+<pre><code>![](目录名/文件名.png)
+</code></pre><p>当图片路径配置完成后执行clean操作，避免出现路径错误情况  </p>
+<pre><code>$ hexo clean
+$ hexo generate
+$ hexo server
+</code></pre><p><strong>2. feed插件-RSS</strong></p>
+<pre><code>npm install hexo-generator-feed
+</code></pre><p>修改<code>_config.yml</code>，增加以下内容</p>
+<pre><code># Extensions
+Plugins:
+- hexo-generator-feed
+
+#Feed Atom
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+</code></pre><p><strong>3. hexo-addlink-永久链接</strong><br>执行<code>git bash</code>进入你的blog目录</p>
+<pre><code>$ npm install hexo-addlink --save
+</code></pre><p>配置<code>_config.yml</code>文件，添加：</p>
+<pre><code>addlink:
+  before_text: hello # text before the post link
+  after_text: bye # text after the post link
+</code></pre><p>之后运行命令</p>
+<pre><code>$ hexo clean &amp;&amp; hexo g
+</code></pre><p><strong>4. hexo-generator-search-本地搜索</strong>  </p>
+<p> 执行命令：</p>
+<pre><code>npm install hexo-generator-search --save
+</code></pre><p>修改<code>_config.yml</code>文件，添加：</p>
+<pre><code>search:
+  path: search.xml
+  field: post
+</code></pre><p><strong>5. google-code-prettify-代码高亮</strong><br>这里借鉴了<a href="https://jmblog.github.io/color-themes-for-google-code-prettify/" target="_blank" rel="external">jmblog的google-code-prettify</a>，npm安装即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install color-themes-for-google-code-prettify</div></pre></td></tr></table></figure>
+<p>其他插件就不在列举了，有兴趣可以看hexo插件站：<a href="https://hexo.io/plugins/" target="_blank" rel="external">plugin</a></p>
+<p>hello <a href="http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/">http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/</a> bye</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Hello World]]></title>
       <url>http://www.jjl1979.com/2016/12/22/hello-world/</url>
       <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
