@@ -53,8 +53,7 @@ yum -y --enablerepo=elrepo-kernel install kernel-lt
 3.10.104-1.el6.elrepo.x86_64          
 </code></pre><h3 id="docker-io-和-docker-engine"><a href="#docker-io-和-docker-engine" class="headerlink" title="docker.io 和 docker-engine"></a>docker.io 和 docker-engine</h3><p> 软件是一样的，区别是:  </p>
 <blockquote>
-<p><strong>docker.io is maintained by Ubuntu</strong>  </p>
-<p><strong>docker-engine is maintained by Docker</strong></p>
+<p><strong>docker.io is maintained by Ubuntu</strong><br><strong>docker-engine is maintained by Docker</strong></p>
 </blockquote>
 <h3 id="cnetos6-and-centos7"><a href="#cnetos6-and-centos7" class="headerlink" title="cnetos6 and centos7"></a>cnetos6 and centos7</h3><p>centos6<br>按照wiki的说法，需要安装<a href="http://elrepo.org/tiki/tiki-index.php" target="_blank" rel="external">EPEL</a>才行，这样安装的docker是1.5版本，docker官方对centos6的支持停留在1.7.1版本，所以不要无谓的升级版本，升级了你反而可能不能用了，出现各种各样的问题，所以在安装docker之前先确定你的需求。<br>centos7<br>官网上有详细的安装教程，因为centos7拥有运行docker的高版本内核  </p>
 <h3 id="centos6安装"><a href="#centos6安装" class="headerlink" title="centos6安装"></a>centos6安装</h3><pre><code>rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm  
@@ -93,7 +92,7 @@ docker run  hello-world
 
   最终运行：  
   docker run -d -t -v /usr/local/src/vote_prod:/opt/software -p 8080:3000 --name vote_prod deb-node1.0 bash -c &quot;source /root/.profile; /usr/local/bin/forever /opt/software/vote/bin/www&quot;
-</code></pre><font color="#0099ff" size="3" face="微软雅黑">强调一下，如果想进入当前运行的容器：<br><br>该命令在退出当前容器后不退出后台容器<br></font>
+</code></pre><font color="#0099ff" size="3" face="微软雅黑">强调一下，如果想进入当前运行的容器：<br>该命令在退出当前容器后不退出后台容器<br></font>
 
 
 <pre><code>docker exec -it &lt;新容器ID&gt; /bin/bash  
