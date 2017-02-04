@@ -546,7 +546,7 @@
       
         
           
-            <h2 id="docker定义"><a href="#docker定义" class="headerlink" title="docker定义"></a>docker定义</h2><p>先看下docker的logo<br><img src="/2017/01/17/docker安装和命令/docker/dockerlogo.png" alt=""><br>这个图标很形象：<br>鲸鱼代表了docker这个应用程序，上面的集装箱则代表了docker所承载的内容，每个箱子都是一个容器container，里面装的可以是系统镜像，也可以是应用程序，那么整体上看就是一个docker里可以应用很多个service.  </p>
+            <h2 id="docker定义"><a href="#docker定义" class="headerlink" title="docker定义"></a>docker定义</h2><p>先看下docker的logo<br><img src="http://i.imgur.com/9hxAfXm.png" alt=""><br>这个图标很形象：<br>鲸鱼代表了docker这个应用程序，上面的集装箱则代表了docker所承载的内容，每个箱子都是一个容器container，里面装的可以是系统镜像，也可以是应用程序，那么整体上看就是一个docker里可以应用很多个service.  </p>
 <h3 id="容器式的虚拟机，虚拟机式的容器"><a href="#容器式的虚拟机，虚拟机式的容器" class="headerlink" title="容器式的虚拟机，虚拟机式的容器"></a>容器式的虚拟机，虚拟机式的容器</h3><p>查了查网上的各种说法，仍然说不出个所以然，后来在dockerone上看到看到一篇文章，感觉和我所理解的的很贴近，<br>关于容器与虚拟机的差异，具有普遍共识的特征归纳起来大致有以下几点：</p>
 <ul>
 <li>容器实例与主机共享操作系统内核，通过内核提供的运行时隔离能力为服务提供独立的用户域、文件系统、网络以及进程运行空间。虚拟机的每个实例自带操作系统，因而是一种硬件级的虚拟化隔离。</li>
@@ -555,7 +555,7 @@
 <li>容器在启动速度和运行性能上更有优势，虚拟机在安全性上更有优势。</li>
 </ul>
 <p>通过这个介绍可以大致说明了虚拟机和容器的区别，类似于<strong>apache</strong>和<strong>nginx</strong>的讨论，实际应用看你怎么选了。</p>
-<p><a href="http://dockone.io/article/1331" target="_blank" rel="external">运行在硬件上的Docker：Hyper</a><br><img src="/2017/01/17/docker安装和命令/docker/bijiao.jpg" alt=""> </p>
+<p><a href="http://dockone.io/article/1331" target="_blank" rel="external">运行在硬件上的Docker：Hyper</a><br><img src="http://i.imgur.com/LdrRHj4.png" alt=""></p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>&emsp;安装官方的说明文档，需要内核版本3.8以上，所以先需要升级内核<br>我使用是是centos6.5，其他系统可参照官方说明安装<a href="https://docs.docker.com/engine/installation/linux/" title="docker install" target="_blank" rel="external">https://docs.docker.com/engine/installation/linux/</a></p>
 <h3 id="内核升级"><a href="#内核升级" class="headerlink" title="内核升级"></a>内核升级</h3><pre><code>rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -ivh http://www.elrepo.org/elrepo-release-6-5.el6.elrepo.noarch.rpm
