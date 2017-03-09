@@ -279,6 +279,139 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/03/09/nginx基本功能实现/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="红曳">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="红曳的Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/09/nginx基本功能实现/" itemprop="url">
+                  nginx基本功能实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-09T15:57:23+08:00">
+                2017-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基于用户认证"><a href="#基于用户认证" class="headerlink" title="基于用户认证"></a>基于用户认证</h2><h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        auth_basic &quot;www.bjwf125.com&quot;;</div><div class="line">        auth_basic_user_file /www/html/.passwd;</div><div class="line">        &#125;</div><div class="line"> ｝</div></pre></td></tr></table></figure>
+<h3 id="创建文档根目录以及使用httpd-tools中的htpasswd工具创建用户"><a href="#创建文档根目录以及使用httpd-tools中的htpasswd工具创建用户" class="headerlink" title="创建文档根目录以及使用httpd-tools中的htpasswd工具创建用户"></a>创建文档根目录以及使用httpd-tools中的htpasswd工具创建用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[root@mail ~]# mkdir -pv /www/html</div><div class="line">mkdir: created directory `/www&apos;</div><div class="line">mkdir: created directory `/www/html&apos;</div><div class="line">[root@mail ~]# echo &quot;Welcome to bjwf125&quot; &gt; /www/html/index.html</div><div class="line">[root@mail ~]# yum -y install httpd-tools</div><div class="line">[root@mail ~]# htpasswd -c -m /www/html/.passwd centos    #创建centos用户</div><div class="line">New password:                                    #输入密码</div><div class="line">Re-type new password:                            #再次输入</div><div class="line">Adding password for user centos</div><div class="line">（3）、重新载入配置文件</div><div class="line">[root@mail ~]# nginx -t    #检查Nginx语法</div><div class="line">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok</div><div class="line">nginx: configuration file /etc/nginx/nginx.conf test is successful</div><div class="line">[root@mail ~]# service nginx reload     #重新载入</div></pre></td></tr></table></figure>
+<p><img src="http://qUniami.png" alt=""></p>
+<h2 id="基于IP认证"><a href="#基于IP认证" class="headerlink" title="基于IP认证"></a>基于IP认证</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        deny 192.168.9.0/24;</div><div class="line">        allow all;</div><div class="line">        &#125;</div><div class="line"> ｝</div></pre></td></tr></table></figure>
+<h2 id="基于gzip压缩"><a href="#基于gzip压缩" class="headerlink" title="基于gzip压缩"></a>基于gzip压缩</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"> server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   /www/html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        gzip on;</div><div class="line">        gzip_http_version 1.0;</div><div class="line">        gzip_min_length 1000;</div><div class="line">        gzip_proxied expired no-cache no-store private auth;</div><div class="line">        gzip_types text/plain application/xml text/css application/x-javascript text/xml</div><div class="line">             application/xml+rss text/javascript application/javascript application/json;</div><div class="line">        gzip_disable msie6 safari;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"> ｝</div><div class="line">[root@mail ~]# nginx -t</div><div class="line">[root@mail ~]# service nginx reload</div><div class="line">[root@mail ~]# cp /etc/rc.d/rc.sysinit /www/html/zip.html</div><div class="line">[root@mail ~]# ll /www/html/zip.html -h</div><div class="line">-rwxr-xr-x 1 root root 20K Jan 13 10:01 /www/html/zip.html</div></pre></td></tr></table></figure>
+<p><img src="http://JbAJreI.png" alt=""></p>
+<h2 id="定制响应头部"><a href="#定制响应头部" class="headerlink" title="定制响应头部"></a>定制响应头部</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   /www/html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        expires 24h;</div><div class="line">        add_header bjwf125 mymail;</div><div class="line">        &#125;</div><div class="line">｝</div><div class="line">[root@mail ~]# nginx -t</div><div class="line">[root@mail ~]# service nginx reload</div></pre></td></tr></table></figure>
+<p><img src="http://header.png" alt=""></p>
+<h2 id="URL重定向"><a href="#URL重定向" class="headerlink" title="URL重定向"></a>URL重定向</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">语法格式：</div><div class="line">   rewrite grgex replacement [flages]</div><div class="line">   flages</div><div class="line">   last:一旦被当前规则匹配并重写后立即停止检查其他后续的rewrite的规则，而后通过重写后的规则重写发起请求;</div><div class="line">   bleak：一旦被当前规则匹配并重写后立即停止后续的其他rewrite的规则，而后由nginx进行后续操作；</div><div class="line">   redirect：返回302临时重定向</div><div class="line">   permanent：返回301永久重定向</div><div class="line">例如：</div><div class="line">[root@mail ~]# vim /etc/nginx/nginx.conf</div><div class="line"> server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   /www/html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        rewrite ^/admin/(.*)$ /web/$1;</div><div class="line">        &#125;</div><div class="line">  ｝</div><div class="line">  </div><div class="line">[root@mail ~]# mkdir -pv /www/html/&#123;admin,web&#125;</div><div class="line">[root@mail ~]# echo &quot;mail.bjwf125.com&quot; &gt; /www/html/web/index.html</div><div class="line">[root@mail ~]# nginx -t</div><div class="line">[root@mail ~]# service nginx reload</div></pre></td></tr></table></figure>
+<p><img src="http://URL.png" alt=""></p>
+<h2 id="虚拟主机"><a href="#虚拟主机" class="headerlink" title="虚拟主机"></a>虚拟主机</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line">[root@mail nginx]# vim /etc/nginx/nginx.conf</div><div class="line">#注释掉http&#123;&#125;段中的预定义server&#123;&#125;段中的所有内容；</div><div class="line">在文件末尾｝前一行添加一条：</div><div class="line">include conf.d/nginx-vhost.conf;</div><div class="line">#方便后面定义，根据个人习惯而已，也可以直接在/etc/nginx/nginx.conf中配置</div><div class="line">[root@mail nginx]# vim /etc/nginx/conf.d/nginx-vhost.conf </div><div class="line">server &#123;</div><div class="line">   listen       80;</div><div class="line">   server_name  www.a.com;</div><div class="line">        </div><div class="line">   location / &#123;</div><div class="line">        root    /www/html/a;</div><div class="line">        index   index.html index.htm;</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">server &#123;</div><div class="line">   listen       80;</div><div class="line">   server_name  www.b.com;</div><div class="line">        </div><div class="line">   location / &#123;</div><div class="line">        root    /www/html/b;</div><div class="line">        index   index.html index.htm;</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">[root@mail nginx]# mkdir /www/html/&#123;a,b&#125; -pv</div><div class="line">mkdir: created directory `/www/html/a&apos;</div><div class="line">mkdir: created directory `/www/html/b&apos;</div><div class="line">[root@mail nginx]# echo &quot;www.a.com&quot; &gt; /www/html/a/index.html</div><div class="line">[root@mail nginx]# echo &quot;www.b.com&quot; &gt; /www/html/b/index.html</div><div class="line">[root@mail nginx]# vim /etc/hosts</div><div class="line">192.168.9.9     www.a.com</div><div class="line">192.168.9.9     www.b.com</div><div class="line">[root@mail nginx]# service nginx reload</div><div class="line">[root@mail nginx]# curl http://www.a.com</div><div class="line">www.a.com</div><div class="line">[root@mail nginx]# curl http://www.b.com</div><div class="line">www.b.com</div><div class="line">###虚拟主机最简单的方式已经配置完成，但是虚拟主机里面还有很多参数。</div><div class="line">7、防盗链</div><div class="line">（1）、定义合规的引用</div><div class="line">        valid_referers none | blocked | server_names | string ...;</div><div class="line"> (2)、拒绝不合规的引用</div><div class="line">         if ($invalid referer) &#123;</div><div class="line">          rewrite ^/ http://www.b.com/403.html;</div><div class="line">         &#125;</div><div class="line">  ##具体示例如下：</div><div class="line">  [root@mail conf.d]# vim nginx-vhost.conf</div><div class="line">   server &#123;</div><div class="line">   listen       80;</div><div class="line">   server_name  www.b.com;</div><div class="line">        </div><div class="line">   location / &#123;</div><div class="line">        root    /www/html/b;</div><div class="line">        index   index.html index.htm;</div><div class="line">        valid_referers none blocked www.b.com *.b.com；</div><div class="line">        if ($invalid_referer) &#123;</div><div class="line">        rewrite ^/ http://www.b.com/403.html;</div><div class="line">        &#125;</div><div class="line">      ｝</div><div class="line">   &#125; </div><div class="line">   </div><div class="line">   [root@mail conf.d]# vim /www/html/a/index.html</div><div class="line">   www.a.com</div><div class="line">   &lt;img src=&quot;http://www.b.com/images/1.jpg&quot;&gt;   #在a.com中引用</div><div class="line">    [root@mail conf.d]# vim /www/html/b/index.html</div><div class="line">   www.b.com</div><div class="line">   &lt;img src=&quot;http://www.b.com/images/1.jpg&quot;&gt;   #b.com自己引用</div></pre></td></tr></table></figure>
+<p><img src="http://xuni.png" alt=""><br><img src="http://xunib.png" alt=""></p>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>第一种：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location /proxy/ &#123;</div><div class="line">     proxy_pass http://127.0.0.1:81/;</div><div class="line">&#125;</div><div class="line">#会被代理到http://127.0.0.1:81/test.html 这个url</div></pre></td></tr></table></figure></p>
+<p>第二种：(相对于第一种，最后少一个 /)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">location /proxy/ &#123;</div><div class="line">     proxy_pass http://127.0.0.1:81;</div><div class="line">&#125;</div><div class="line"></div><div class="line">#会被代理到http://127.0.0.1:81/proxy/test.html 这个url</div></pre></td></tr></table></figure></p>
+<p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx基本功能实现/">http://www.jjl1979.com/2017/03/09/nginx基本功能实现/</a> bye</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/03/09/nginx负载均衡/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1840,171 +1973,6 @@ events{
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/02/13/PCRE源码安装使用/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="红曳">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="红曳的Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/13/PCRE源码安装使用/" itemprop="url">
-                  PCRE源码安装使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T17:42:12+08:00">
-                2017-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>最新版本是pcre2，但是在兼容性上存在问题，这里选择了8.39版本，安装通过。</p>
-</blockquote>
-<p>1、下载地址：<a href="http://www.pcre.org/" target="_blank" rel="external">http://www.pcre.org/</a><br>    pcre-8.39.tar.gz</p>
-<p>2、解压缩：<br>     tar xvf pcre-8.39.tar.gz</p>
-<p>3、配置：  </p>
-<pre><code>cd pcre-8.39
-./configure --prefix=/usr/local/pcre-8.39 --libdir=/usr/local/lib/pcre --includedir=/usr/local/include/pcre
-configure有许多参数可配，具体参见./configure --help及手册
-</code></pre><p>4、编译：  </p>
-<pre><code>make
-</code></pre><p>5、安装：<br>     make install</p>
-<p>6、检查： </p>
-<pre><code>ls /usr/local 检查是否有pcre-8.39目录
-ls /usr/local/lib   检查是否有pcre目录
-ls /usr/local/include   检查是否有pcre目录
-</code></pre><p>7、将库文件导入cache：  </p>
-<pre><code>方法1：在/etc/ld.so.conf中加入： ／usr/local/lib/pcre，然后运行ldconfig
-方法2：在/etc/ld.so.conf.d/下新生成一个文件（或在其中的文件中加入同样内容），文件内容为：
-          /usr/local/lib/pcre，然后运行ldconfig
-</code></pre><p>8、使用： </p>
-<pre><code>使用pcre编写C或C＋＋程序，然后编译。
-对于C程序，编译命令为：gcc -I/usr/local/include/pcre -L/usr/local/lib/pcre -lpcre file.c
-对于C程序，编译命令为：gcc -I/usr/local/include/pcre -L/usr/local/lib/pcre -lpcrecpp file.cpp
-</code></pre><p>hello <a href="http://www.jjl1979.com/2017/02/13/PCRE源码安装使用/">http://www.jjl1979.com/2017/02/13/PCRE源码安装使用/</a> bye</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2052,7 +2020,7 @@ ls /usr/local/include   检查是否有pcre目录
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
