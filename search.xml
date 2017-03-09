@@ -4,6 +4,20 @@
   
     
     <entry>
+      <title><![CDATA[nginx rewrite 不加break和加break的区别]]></title>
+      <url>http://www.jjl1979.com/2017/03/09/nginx-rewrite-%E4%B8%8D%E5%8A%A0break%E5%92%8C%E5%8A%A0break%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+      <content type="html"><![CDATA[<p><table><tr><td bgcolor="#EDEFF0">if (!-e $document_root$fastcgi_script_name) {<br>    rewrite ^.*$ /404.html break;<br>}</td></tr></table><br>这时候是正常的，但是去掉break后，</p>
+<p><table><tr><td bgcolor="#EDEFF0">if (!-e $document_root$fastcgi_script_name) {<br>    rewrite ^.*$ /404.html;<br>}</td></tr></table><br>这时候就报错了</p>
+<p>rewrite or internal redirection cycle while processing “/404.html</p>
+<p>在location块里面，如果rewrite之后不加break flag或者rewrite 之后有last flag，那么rewrite之后会重新选择location块，如果仍然进入原先所在的location块，那么变量($document_root , $fastcgi_script_name …)是不会变化的，但是如果rewrite之后重定向到别的location块后，这时候变量就会改变</p>
+<hr>
+<p>不加 break 就不会停止，继续找下一个 rewrite 规则。</p>
+<p>把所有请求 rewrite 到了 404.html，如果 404.html 也不存在，就死循环了。</p>
+<p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx-rewrite-不加break和加break的区别/">http://www.jjl1979.com/2017/03/09/nginx-rewrite-不加break和加break的区别/</a> bye</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[nginx基本功能实现]]></title>
       <url>http://www.jjl1979.com/2017/03/09/nginx%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0/</url>
       <content type="html"><![CDATA[<h2 id="基于用户认证"><a href="#基于用户认证" class="headerlink" title="基于用户认证"></a>基于用户认证</h2><h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">        listen       80;</div><div class="line">        server_name  localhost;</div><div class="line"></div><div class="line">        #charset koi8-r;</div><div class="line"></div><div class="line">        #access_log  logs/host.access.log  main;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">            root   html;</div><div class="line">            index  index.html index.htm;</div><div class="line">        auth_basic &quot;www.bjwf125.com&quot;;</div><div class="line">        auth_basic_user_file /www/html/.passwd;</div><div class="line">        &#125;</div><div class="line"> ｝</div></pre></td></tr></table></figure>
