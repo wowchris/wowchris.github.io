@@ -128,6 +128,9 @@
 
 
 
+
+
+
   <title> 红曳的Blog </title>
 </head>
 
@@ -266,6 +269,561 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/03/09/nginx1-8-1稳定版本ngixn-conf-配置文件解析/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="红曳">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="红曳的Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/09/nginx1-8-1稳定版本ngixn-conf-配置文件解析/" itemprop="url">
+                  nginx1.8.1稳定版本ngixn.conf 配置文件解析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-09T10:58:16+08:00">
+                2017-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="nginx-conf"><a href="#nginx-conf" class="headerlink" title="nginx.conf"></a>nginx.conf</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#定义Nginx运行的用户和用户组  </span></div><div class="line">user www www;  </div><div class="line">   </div><div class="line"><span class="comment">#nginx进程数，建议设置为等于CPU总核心数。  </span></div><div class="line">worker_processes 8;  </div><div class="line">   </div><div class="line"><span class="comment">#全局错误日志定义类型，[ debug | info | notice | warn | error | crit ]  </span></div><div class="line">error_log ar/loginx/error.log info;  </div><div class="line">   </div><div class="line"><span class="comment">#进程文件  </span></div><div class="line">pid ar/runinx.pid;  </div><div class="line">   </div><div class="line"><span class="comment">#一个nginx进程打开的最多文件描述符数目，理论值应该是最多打开文件数（系统的值ulimit -n）与nginx进程数相除，但是nginx分配请求并不均匀，所以建议与ulimit -n的值保持一致。  </span></div><div class="line">worker_rlimit_nofile 65535;  </div><div class="line">   </div><div class="line"><span class="comment">#工作模式与连接数上限  </span></div><div class="line">events  </div><div class="line">&#123;  </div><div class="line"><span class="comment">#参考事件模型，use [ kqueue | rtsig | epoll | /dev/poll | select | poll ]; epoll模型是Linux 2.6以上版本内核中的高性能网络I/O模型，如果跑在FreeBSD上面，就用kqueue模型。  </span></div><div class="line">use epoll;  </div><div class="line"><span class="comment">#单个进程最大连接数（最大连接数=连接数*进程数）  </span></div><div class="line">worker_connections 65535;  </div><div class="line">&#125;  </div><div class="line">   </div><div class="line"><span class="comment">#设定http服务器  </span></div><div class="line">http  </div><div class="line">&#123;  </div><div class="line">include mime.types; <span class="comment">#文件扩展名与文件类型映射表  </span></div><div class="line">default_type application/octet-stream; <span class="comment">#默认文件类型  </span></div><div class="line"><span class="comment">#charset utf-8; #默认编码  </span></div><div class="line">server_names_hash_bucket_size 128; <span class="comment">#服务器名字的hash表大小  </span></div><div class="line">client_header_buffer_size 32k; <span class="comment">#上传文件大小限制  </span></div><div class="line">large_client_header_buffers 4 64k; <span class="comment">#设定请求缓  </span></div><div class="line">client_max_body_size 8m; <span class="comment">#设定请求缓  </span></div><div class="line">sendfile on; <span class="comment">#开启高效文件传输模式，sendfile指令指定nginx是否调用sendfile函数来输出文件，对于普通应用设为 on，如果用来进行下载等应用磁盘IO重负载应用，可设置为off，以平衡磁盘与网络I/O处理速度，降低系统的负载。注意：如果图片显示不正常把这个改成off。  </span></div><div class="line">autoindex on; <span class="comment">#开启目录列表访问，合适下载服务器，默认关闭。  </span></div><div class="line">tcp_nopush on; <span class="comment">#防止网络阻塞  </span></div><div class="line">tcp_nodelay on; <span class="comment">#防止网络阻塞  </span></div><div class="line">keepalive_timeout 120; <span class="comment">#长连接超时时间，单位是秒  </span></div><div class="line">   </div><div class="line"><span class="comment">#FastCGI相关参数是为了改善网站的性能：减少资源占用，提高访问速度。下面参数看字面意思都能理解。  </span></div><div class="line">fastcgi_connect_timeout 300;  </div><div class="line">fastcgi_send_timeout 300;  </div><div class="line">fastcgi_read_timeout 300;  </div><div class="line">fastcgi_buffer_size 64k;  </div><div class="line">fastcgi_buffers 4 64k;  </div><div class="line">fastcgi_busy_buffers_size 128k;  </div><div class="line">fastcgi_temp_file_write_size 128k;  </div><div class="line">   </div><div class="line"><span class="comment">#gzip模块设置  </span></div><div class="line">gzip on; <span class="comment">#开启gzip压缩输出  </span></div><div class="line">gzip_min_length 1k; <span class="comment">#最小压缩文件大小  </span></div><div class="line">gzip_buffers 4 16k; <span class="comment">#压缩缓冲区  </span></div><div class="line">gzip_http_version 1.0; <span class="comment">#压缩版本（默认1.1，前端如果是squid2.5请使用1.0）  </span></div><div class="line">gzip_comp_level 2; <span class="comment">#压缩等级  </span></div><div class="line">gzip_types text/plain application/x-javascript text/css application/xml;  </div><div class="line"><span class="comment">#压缩类型，默认就已经包含textml，所以下面就不用再写了，写上去也不会有问题，但是会有一个warn。  </span></div><div class="line">gzip_vary on;  </div><div class="line"><span class="comment">#limit_zone crawler $binary_remote_addr 10m; #开启限制IP连接数的时候需要使用  </span></div><div class="line">   </div><div class="line">upstream blog.ha97.com &#123;  </div><div class="line"><span class="comment">#upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。  </span></div><div class="line">server 192.168.80.121:80 weight=3;  </div><div class="line">server 192.168.80.122:80 weight=2;  </div><div class="line">server 192.168.80.123:80 weight=3;  </div><div class="line">&#125;  </div><div class="line">   </div><div class="line"><span class="comment">#虚拟主机的配置  </span></div><div class="line">server  </div><div class="line">&#123;  </div><div class="line"><span class="comment">#监听端口  </span></div><div class="line">listen 80;  </div><div class="line"><span class="comment">#域名可以有多个，用空格隔开  </span></div><div class="line">server_name www.ha97.com ha97.com;  </div><div class="line">index index.html index.htm index.php;  </div><div class="line">root /data/www/ha97;  </div><div class="line">location ~ .*.(php|php5)?$  </div><div class="line">&#123;  </div><div class="line">fastcgi_pass 127.0.0.1:9000;  </div><div class="line">fastcgi_index index.php;  </div><div class="line">include fastcgi.conf;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">#图片缓存时间设置  </span></div><div class="line">location ~ .*.(gif|jpg|jpeg|png|bmp|swf)$  </div><div class="line">&#123;  </div><div class="line">expires 10d;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">#JS和CSS缓存时间设置  </span></div><div class="line">location ~ .*.(js|css)?$  </div><div class="line">&#123;  </div><div class="line">expires 1h;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">#日志格式设定  </span></div><div class="line">log_format access <span class="string">'$remote_addr - $remote_user [$time_local] "$request" '</span>  </div><div class="line"><span class="string">'$status $body_bytes_sent "$http_referer" '</span>  </div><div class="line"><span class="string">'"$http_user_agent" $http_x_forwarded_for'</span>;  </div><div class="line"><span class="comment">#定义本虚拟主机的访问日志  </span></div><div class="line">access_log ar/loginx/ha97access.log access;  </div><div class="line">   </div><div class="line"><span class="comment">#对 "/" 启用反向代理  </span></div><div class="line">location / &#123;  </div><div class="line">proxy_pass http://127.0.0.1:88;  </div><div class="line">proxy_redirect off;  </div><div class="line">proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;  </div><div class="line"><span class="comment">#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP  </span></div><div class="line">proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;  </div><div class="line"><span class="comment">#以下是一些反向代理的配置，可选。  </span></div><div class="line">proxy_set_header Host <span class="variable">$host</span>;  </div><div class="line">client_max_body_size 10m; <span class="comment">#允许客户端请求的最大单文件字节数  </span></div><div class="line">client_body_buffer_size 128k; <span class="comment">#缓冲区代理缓冲用户端请求的最大字节数，  </span></div><div class="line">proxy_connect_timeout 90; <span class="comment">#nginx跟后端服务器连接超时时间(代理连接超时)  </span></div><div class="line">proxy_send_timeout 90; <span class="comment">#后端服务器数据回传时间(代理发送超时)  </span></div><div class="line">proxy_read_timeout 90; <span class="comment">#连接成功后，后端服务器响应时间(代理接收超时)  </span></div><div class="line">proxy_buffer_size 4k; <span class="comment">#设置代理服务器（nginx）保存用户头信息的缓冲区大小  </span></div><div class="line">proxy_buffers 4 32k; <span class="comment">#proxy_buffers缓冲区，网页平均在32k以下的设置  </span></div><div class="line">proxy_busy_buffers_size 64k; <span class="comment">#高负荷下缓冲大小（proxy_buffers*2）  </span></div><div class="line">proxy_temp_file_write_size 64k;  </div><div class="line"><span class="comment">#设定缓存文件夹大小，大于这个值，将从upstream服务器传  </span></div><div class="line">&#125;  </div><div class="line">   </div><div class="line"><span class="comment">#设定查看Nginx状态的地址  </span></div><div class="line">location /NginxStatus &#123;  </div><div class="line">stub_status on;  </div><div class="line">access_log on;  </div><div class="line">auth_basic <span class="string">"NginxStatus"</span>;  </div><div class="line">auth_basic_user_file confpasswd;  </div><div class="line"><span class="comment">#htpasswd文件的内容可以用apache提供的htpasswd工具来产生。  </span></div><div class="line">&#125;  </div><div class="line">   </div><div class="line"><span class="comment">#本地动静分离反向代理配置  </span></div><div class="line"><span class="comment">#所有jsp的页面均交由tomcat或resin处理  </span></div><div class="line">location ~ .(jsp|jspx|<span class="keyword">do</span>)?$ &#123;  </div><div class="line">proxy_set_header Host <span class="variable">$host</span>;  </div><div class="line">proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;  </div><div class="line">proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;  </div><div class="line">proxy_pass http://127.0.0.1:8080;  </div><div class="line">&#125;  </div><div class="line"><span class="comment">#所有静态文件由nginx直接读取不经过tomcat或resin  </span></div><div class="line">location ~ .*.(htm|html|gif|jpg|jpeg|png|bmp|swf|ioc|rar|zip|txt|flv|mid|doc|ppt|pdf|xls|mp3|wma)$  </div><div class="line">&#123; expires 15d; &#125;  </div><div class="line">location ~ .*.(js|css)?$  </div><div class="line">&#123; expires 1h; &#125;  </div><div class="line">&#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="配置文件结构"><a href="#配置文件结构" class="headerlink" title="配置文件结构"></a>配置文件结构</h2><p>Nginx的配置文件nginx.conf位于其安装目录的conf目录下。<br>nginx.conf由多个块组成，最外面的块是main，main包含Events和HTTP，HTTP包含upstream和多个Server，Server又包含多个location：<br><img src="http://" alt=""></p>
+<p>main（全局设置）、server（主机设置）、upstream（负载均衡服务器设置）和 location（URL匹配特定位置的设置）。<br>main块设置的指令将影响其他所有设置；<br>server块的指令主要用于指定主机和端口；<br>upstream指令主要用于负载均衡，设置一系列的后端服务器；<br>location块用于匹配网页位置。<br>这四者之间的关系式：server继承main，location继承server，upstream既不会继承其他设置也不会被继承。<br>在这四个部分当中，每个部分都包含若干指令，这些指令主要包含Nginx的主模块指令、事件模块指令、HTTP核心模块指令，同时每个部分还可以使用其他HTTP模块指令，例如Http SSL模块、HttpGzip Static模块和Http Addition模块等。</p>
+<h3 id="Nginx的全局配置"><a href="#Nginx的全局配置" class="headerlink" title="Nginx的全局配置"></a>Nginx的全局配置</h3><pre><code>user  nobody nobody;  
+worker_processes  2;  
+error_log  logs/error.log  notice;  
+pid        logs/nginx.pid;  
+worker_rlimit_nofile 65535;  
+
+events{  
+     use epoll;  
+     worker_connections      65536;  
+}  
+</code></pre><p>含义解释如下：  </p>
+<ul>
+<li>user是个主模块指令，指定Nginx Worker进程运行用户以及用户组，默认由nobody账号运行。</li>
+<li>worker_processes是个主模块指令，指定了Nginx要开启的进程数。每个Nginx进程平均耗费10M~12M内存。建议指定和CPU的数量一致即可。</li>
+<li>error_log是个主模块指令，用来定义全局错误日志文件。日志输出级别有debug、info、notice、warn、error、crit可供选择，其中，debug输出日志最为最详细，而crit输出日志最少。</li>
+<li>pid是个主模块指令，用来指定进程pid的存储文件位置。</li>
+<li>worker_rlimit_nofile用于绑定worker进程和CPU， Linux内核2.4以上可用。</li>
+</ul>
+<p>events事件指令是设定Nginx的工作模式及连接数上限：use是个事件模块指令，用来指定Nginx的工作模式。Nginx支持的工作模式有select、poll、kqueue、epoll、rtsig和/dev/poll。其中select和poll都是标准的工作模式，kqueue和epoll是高效的工作模式，不同的是epoll用在Linux平台上，而kqueue用在BSD系统中。对于Linux系统，epoll工作模式是首选。<br>worker_connections也是个事件模块指令，用于定义Nginx每个进程的最大连接数，默认是1024。最大客户端连接数由worker_processes和worker_connections决定，即Max_client=worker_processes<em>worker_connections。<br>在作为反向代理时，max_clients变为：max_clients = worker_processes </em> worker_connections/4。<br>进程的最大连接数受Linux系统进程的最大打开文件数限制，在执行操作系统命令“ulimit -n 65536”后worker_connections的设置才能生效  </p>
+<h3 id="HTTP服务器配置"><a href="#HTTP服务器配置" class="headerlink" title="HTTP服务器配置"></a>HTTP服务器配置</h3><p>Nginx对HTTP服务器相关属性的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">http&#123;  </div><div class="line">    include      conf/mime.types;  </div><div class="line">    default_type  application/octet-stream;  </div><div class="line">    log_format main &apos;$remote_addr - $remote_user [$time_local] &apos;  </div><div class="line">    &apos;&quot;$request&quot; $status $bytes_sent &apos;  </div><div class="line">    &apos;&quot;$http_referer&quot; &quot;$http_user_agent&quot; &apos;  </div><div class="line">    &apos;&quot;$gzip_ratio&quot;&apos;;  </div><div class="line">    log_format download &apos;$remote_addr - $remote_user [$time_local] &apos;  </div><div class="line">    &apos;&quot;$request&quot; $status $bytes_sent &apos;  </div><div class="line">    &apos;&quot;$http_referer&quot; &quot;$http_user_agent&quot; &apos;  </div><div class="line">    &apos;&quot;$http_range&quot; &quot;$sent_http_content_range&quot;&apos;;  </div><div class="line">    client_max_body_size  20m;  </div><div class="line">    client_header_buffer_size    32K;  </div><div class="line">    large_client_header_buffers  4 32k;  </div><div class="line">    Sendfile  on;  </div><div class="line">    tcp_nopush     on;  </div><div class="line">    tcp_nodelay    on;  </div><div class="line">    keepalive_timeout 60;  </div><div class="line">    client_header_timeout  10;  </div><div class="line">    client_body_timeout    10;  </div><div class="line">    send_timeout          10;</div></pre></td></tr></table></figure></p>
+<p>include是个主模块指令，实现对配置文件所包含的文件的设定，可以减少主配置文件的复杂度。类似于Apache中的include方法。</p>
+<font color="#006699" size="3">default_type属于HTTP核心模块指令，这里设定默认类型为二进制流，也就是当文件类型未定义时使用这种方式，例如在没有配置PHP环境时，Nginx是不予解析的，此时，用浏览器访问PHP文件就会出现下载窗口。</font>
+
+<h3 id="日志格式的设定"><a href="#日志格式的设定" class="headerlink" title="日志格式的设定"></a>日志格式的设定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">log_format main &apos;$remote_addr - $remote_user [$time_local] &apos;  </div><div class="line">&apos;&quot;$request&quot; $status $bytes_sent &apos;  </div><div class="line">&apos;&quot;$http_referer&quot; &quot;$http_user_agent&quot; &apos;  </div><div class="line">&apos;&quot;$gzip_ratio&quot;&apos;;  </div><div class="line">log_format download &apos;$remote_addr - $remote_user [$time_local] &apos;  </div><div class="line">&apos;&quot;$request&quot; $status $bytes_sent &apos;  </div><div class="line">&apos;&quot;$http_referer&quot; &quot;$http_user_agent&quot; &apos;  </div><div class="line">&apos;&quot;$http_range&quot; &quot;$sent_http_content_range&quot;&apos;;</div></pre></td></tr></table></figure>
+<p>log_format是Nginx的HttpLog模块指令，用于指定Nginx日志的输出格式。main为此日志输出格式的名称，可以在下面的access_log指令中引用。</p>
+<ul>
+<li>client_max_body_size用来设置允许客户端请求的最大的单个文件字节数；</li>
+<li>client_header_buffer_size用于指定来自客户端请求头的headerbuffer大小。对于大多数请求，1K的缓冲区大小已经足够，如果自定义了消息头或有更大的Cookie，可以增加缓冲区大小。这里设置为32K；</li>
+<li>large_client_header_buffers用来指定客户端请求中较大的消息头的缓存最大数量和大小， “4”为个数，“128K”为大小，最大缓存量为4个128K；</li>
+<li>sendfile参数用于开启高效文件传输模式。将tcp_nopush和tcp_nodelay两个指令设置为on用于防止网络阻塞；</li>
+<li>keepalive_timeout设置客户端连接保持活动的超时时间。在超过这个时间之后，服务器会关闭该连接；</li>
+<li>client_header_timeout设置客户端请求头读取超时时间。如果超过这个时间，客户端还没有发送任何数据，Nginx将返回“Request time out（408）”错误；</li>
+<li>client_body_timeout设置客户端请求主体读取超时时间。如果超过这个时间，客户端还没有发送任何数据，Nginx将返回“Request time out（408）”错误，默认值是60；</li>
+<li>send_timeout指定响应客户端的超时时间。这个超时仅限于两个连接活动之间的时间，如果超过这个时间，客户端没有任何活动，Nginx将会关闭连接.</li>
+</ul>
+<h3 id="HttpGzip模块配置"><a href="#HttpGzip模块配置" class="headerlink" title="HttpGzip模块配置"></a>HttpGzip模块配置</h3><p>下面配置Nginx的HttpGzip模块。这个模块支持在线实时压缩输出数据流。<br>看是否安装了HttpGzip模块：  </p>
+<table><tr><td bgcolor="#EDEFF0">[root@vps ~]# /opt/nginx/sbin/nginx  -V<br>configure arguments: –with-http_stub_status_module –with-http_gzip_static_module –prefix=/opt/nginx<br></td></tr></table>
+
+<p>属性设置：<br>    gzip  on;<br>    gzip_min_length  1k;<br>    gzip_buffers     4  16k;<br>    gzip_http_version  1.1;<br>    gzip_comp_level  2;<br>    gzip_types  text/plain application/x-javascript text/css application/xml;<br>    gzip_vary  on;  </p>
+<ul>
+<li><p>gzip用于设置开启或者关闭gzip模块，“gzip on”表示开启GZIP压缩，实时压缩输出数据流；  </p>
+</li>
+<li><p>gzip_min_length设置允许压缩的页面最小字节数，页面字节数从header头的Content-Length中获取。默认值是0，不管页面多大都进行压缩。建议设置成大于1K的字节数，小于1K可能会越压越大；  </p>
+</li>
+<li><p>gzip_buffers表示申请4个单位为16K的内存作为压缩结果流缓存，默认值是申请与原始数据大小相同的内存空间来存储gzip压缩结果；  </p>
+</li>
+<li><p>gzip_http_version用于设置识别HTTP协议版本，默认是1.1，目前大部分浏览器已经支持GZIP解压，使用默认即可；  </p>
+</li>
+<li><p>gzip_comp_level用来指定GZIP压缩比，1 压缩比最小，处理速度最快；9 压缩比最大，传输速度快，但处理最慢，也比较消耗cpu资源；  </p>
+</li>
+<li><p>gzip_types用来指定压缩的类型，无论是否指定，“text/html”类型总是会被压缩的；  </p>
+</li>
+<li><p>gzip_vary选项可以让前端的缓存服务器缓存经过GZIP压缩的页面，例如用Squid缓存经过Nginx压缩的数据。  </p>
+</li>
+</ul>
+<p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx1-8-1稳定版本ngixn-conf-配置文件解析/">http://www.jjl1979.com/2017/03/09/nginx1-8-1稳定版本ngixn-conf-配置文件解析/</a> bye</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="红曳">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="红曳的Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/07/redis安装以及php扩展/" itemprop="url">
+                  redis安装以及php扩展
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-07T17:12:36+08:00">
+                2017-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/PHP/memcache/" itemprop="url" rel="index">
+                    <span itemprop="name">memcache</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="memcache-and-redis"><a href="#memcache-and-redis" class="headerlink" title="memcache and redis"></a>memcache and redis</h2><p>[memecache 特点]<br>1:速度最快(没有自测，但网上有详细的测试用例)<br>2:支持水平扩展，可以任意添加节点  </p>
+<p>[redis 特点]<br>1:速度没有memcache快<br>2:支持M/S的主从备份<br>3:可以支持多数据库<br>4:操作指令很丰富<br>4:支持异步数据持久化(以文件保存)  </p>
+<p>总结:<br>1：如果是简单的数据缓存建议使用MEMCACHE。<br>2：如果要对单一操作的数据量非常的大则使用MEMCACHE<br>3: 如果想做性能很好的缓存集群可以用Redis(M/S读写分离,如weibo中的排行榜等)<br>4: 如果在高并发下又想保存数据则可以用Redis   </p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>cd /usr/local/src/<br>wget <a href="http://download.redis.io/releases/redis-3.2.8.tar.gz" target="_blank" rel="external">http://download.redis.io/releases/redis-3.2.8.tar.gz</a><br>tar -zxvf redis-3.2.8.tar.gz<br>cd redis-3.2.8<br>make  </p>
+<p>mkdir -p /usr/local/redis/conf<br>mkdir -p /usr/local/redis/run<br>mkdir -p /usr/local/redis/db<br>cp redis.conf /usr/local/redis/conf/  </p>
+<p>cd src  </p>
+<h2 id="将src目录下所有可执行文件复制到安装目录"><a href="#将src目录下所有可执行文件复制到安装目录" class="headerlink" title="将src目录下所有可执行文件复制到安装目录"></a>将src目录下所有可执行文件复制到安装目录</h2><p>cp redis-benchmark redis-check-aof redis-check-dump redis-cli redis-server mkreleasehdr.sh /usr/local/redis/  </p>
+<h2 id="修改配置文件中的如下选项"><a href="#修改配置文件中的如下选项" class="headerlink" title="修改配置文件中的如下选项"></a>修改配置文件中的如下选项</h2><p>——- vi /usr/local/webserver/redis/conf/redis.conf ——–<br>daemonize yes<br>pidfile /usr/local/redis/run/redis.pid</p>
+<h2 id="dir-usr-local-redis-db"><a href="#dir-usr-local-redis-db" class="headerlink" title="dir /usr/local/redis/db"></a>dir /usr/local/redis/db</h2><h2 id="服务脚本"><a href="#服务脚本" class="headerlink" title="服务脚本"></a>服务脚本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">------- vi /usr/local/redis/start.sh ---------</div><div class="line">#!/bin/bash</div><div class="line">/usr/local/webserver/redis/redis-server /usr/local/webserver/redis/conf/redis.conf</div><div class="line"></div><div class="line"> </div><div class="line">------- vi /usr/local/redis/stop.sh ---------</div><div class="line">#!/bin/bash</div><div class="line">kill `cat /usr/local/redis/run/redis.pid`</div><div class="line">--------------------------------------------------------</div></pre></td></tr></table></figure>
+<p>chmod a+x /usr/local/redis/start.sh /usr/local/redis/stop.sh</p>
+<h2 id="服务与验证"><a href="#服务与验证" class="headerlink" title="服务与验证"></a>服务与验证</h2><p>/usr/local/webserver/redis/start.sh<br>服务查证:<br>netstat -nlpt | grep 6379  </p>
+<p>客户端验证<br>/usr/local/webserver/redis/redis-cli</p>
+<blockquote>
+<p>set key1 val1<br>get key1</p>
+</blockquote>
+<h2 id="主从集群配置"><a href="#主从集群配置" class="headerlink" title="主从集群配置"></a>主从集群配置</h2><p>hello <a href="http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/">http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/</a> bye</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/02/21/Tomcat-redis-nginx的session共享/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="红曳">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="红曳的Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/21/Tomcat-redis-nginx的session共享/" itemprop="url">
+                  Tomcat+redis+nginx的session共享
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-21T19:17:35+08:00">
+                2017-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tomcat/" itemprop="url" rel="index">
+                    <span itemprop="name">tomcat</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tomcat/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tomcat/redis/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>&emsp;使用Nginx+Tomcat实现负载均衡的时候，由于Nginx对不同的请求分发到某一个Tomcat，如果某一个tomcat无法工作或是重新加载就会对用户产生影响，尤其对金融领域会出现session不同步或者丢失的问题，应用nginx_sticky模式分配请求到节点，不管是线上更新还是宕机，用户被分配到其他实例，因为回话是保存在redis中，所以不会影响用户的正常使用。</p>
+<p>应用架构<br><img src="http://" alt=""></p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>tomcat7.0<br>nginx1.8.1稳定版<br>JDK1.7.0<br>redis3.2  </p>
+<p>安装过程这里不赘述</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>Tomcat</p>
+<blockquote>
+<p>localhost:8081<br>localhost:8082<br>localhost:8083  </p>
+</blockquote>
+<p>修改tomcat文件夹中conf/context.xml文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;Valve className=&quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&quot; /&gt;  </div><div class="line">&lt;Manager className=&quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&quot;  </div><div class="line">         host=&quot;localhost&quot;  </div><div class="line">         port=&quot;6379&quot;  </div><div class="line">         database=&quot;0&quot;  </div><div class="line">         maxInactiveInterval=&quot;60&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p>nginx.conf配置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#user  nobody;</span></div><div class="line">worker_processes  1;</div><div class="line"></div><div class="line">error_log  logs/error.log;</div><div class="line"></div><div class="line">pid        logs/nginx.pid;</div><div class="line"></div><div class="line">events &#123;</div><div class="line">	worker_connections  1024;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">#################添加内容###################</span></div><div class="line">http &#123;</div><div class="line"></div><div class="line">		upstream  localhost   &#123;  </div><div class="line">          server   localhost:8081 weight=1;  </div><div class="line">          server   localhost:8082 weight=2;  </div><div class="line">          server   localhost:8083 weight=3; </div><div class="line">	&#125;  </div><div class="line"></div><div class="line">	include       mime.types;</div><div class="line">	default_type  application/octet-stream;</div><div class="line"><span class="comment">###########################################</span></div><div class="line">	log_format  main  <span class="string">'$remote_addr - $remote_user [$time_local] 	"$request" '</span></div><div class="line">                  <span class="string">'$status $body_bytes_sent "$http_referer" '</span></div><div class="line">                  <span class="string">'"$http_user_agent" "$http_x_forwarded_for"'</span>;</div><div class="line"></div><div class="line">	access_log  logs/access.log  main;</div><div class="line"></div><div class="line">	sendfile        on;</div><div class="line">	<span class="comment">#tcp_nopush     on;</span></div><div class="line"></div><div class="line">	<span class="comment">#keepalive_timeout  0;</span></div><div class="line">	keepalive_timeout  65;</div><div class="line"></div><div class="line">	<span class="comment">#gzip  on;</span></div><div class="line"></div><div class="line"></div><div class="line">	server &#123;</div><div class="line">    	listen       80;</div><div class="line">    	server_name  localhost;</div><div class="line"></div><div class="line">    	<span class="comment">#charset koi8-r;</span></div><div class="line"></div><div class="line">    	<span class="comment">#access_log  logs/host.access.log  main;</span></div><div class="line"><span class="comment">#################添加内容#######################</span></div><div class="line">    	location / &#123;</div><div class="line">			proxy_pass        http://localhost;  </div><div class="line"><span class="comment">###############################################</span></div><div class="line">        	root   html;</div><div class="line">        	index  index.html index.htm;</div><div class="line">       	 	proxy_set_header  X-Real-IP  <span class="variable">$remote_addr</span>;  </div><div class="line">        	client_max_body_size  100m;  </div><div class="line">    	&#125;</div><div class="line"></div><div class="line">    	<span class="comment">#error_page  404              /404.html;</span></div><div class="line"></div><div class="line">    	<span class="comment"># redirect server error pages to the static page /50x.html</span></div><div class="line">    	<span class="comment">#</span></div><div class="line">    	error_page   500 502 503 504  /50x.html;</div><div class="line">    	location = /50x.html &#123;</div><div class="line">        	root   html;</div><div class="line">    	&#125;</div><div class="line"></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="项目重建"><a href="#项目重建" class="headerlink" title="项目重建"></a>项目重建</h2><ul>
+<li>tomcat-redis-session-manager</li>
+<li>commons-pool2-2.0</li>
+<li>jedis-2.7.2.jar<br>tomcat-redis-session-manager地址：<a href="https://github.com/jcoleman/tomcat-redis-session-manager" target="_blank" rel="external">https://github.com/jcoleman/tomcat-redis-session-manager</a></li>
+</ul>
+<p>hello <a href="http://www.jjl1979.com/2017/02/21/Tomcat-redis-nginx的session共享/">http://www.jjl1979.com/2017/02/21/Tomcat-redis-nginx的session共享/</a> bye</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -789,8 +1347,9 @@
         
           
             <p>nginx编译常用参数及参数介绍  </p>
-<h2 id="我用的"><a href="#我用的" class="headerlink" title="我用的"></a>我用的</h2><blockquote>
-<p>./configure  –prefix=/usr/local/nginx  –conf-path=/etc/nginx/nginx.conf  –add-module=/usr/local/src/nginx-sticky-module –with-http_stub_status_module –with-http_ssl_module –add-module=/usr/local/src/ngx_devel_kit-0.3.0/ –add-module=/usr/local/src/lua-nginx-module-0.10.6rc1/ –error-log-path=/opt/nginx/logs/error.log –http-log-path=/opt/nginx/logs/access.log  –pid-path=/var/run/nginx/nginx.pid   –with-http_ssl_module –with-http_flv_module –with-http_stub_status_module –with-http_gzip_static_module  –lock-path=/var/lock/nginx.lock  –http-client-body-temp-path=/var/tmp/nginx/client/  –http-proxy-temp-path=/var/tmp/nginx/proxy/    –http-fastcgi-temp-path=/var/tmp/nginx/fcgi/  –http-uwsgi-temp-path=/var/tmp/nginx/uwsgi  –http-scgi-temp-path=/var/tmp/nginx/scgi  </p>
+<h2 id="我用的"><a href="#我用的" class="headerlink" title="我用的"></a>我用的</h2><pre><code>yum -y install gcc gcc-c++ make libtool zlib zlib-devel openssl openssl-devel pcre pcre-devel
+</code></pre><blockquote>
+<p>./configure  –prefix=/usr/local/nginx –sbin-path=/usr/sbin/nginx –conf-path=/etc/nginx/nginx.conf  –add-module=/usr/local/src/nginx-sticky-module –with-http_stub_status_module –with-http_ssl_module –add-module=/usr/local/src/ngx_devel_kit-0.3.0/ –add-module=/usr/local/src/lua-nginx-module-0.10.6rc1/ –error-log-path=/opt/nginx/logs/error.log –http-log-path=/opt/nginx/logs/access.log  –pid-path=/var/run/nginx/nginx.pid   –with-http_ssl_module –with-http_flv_module –with-http_stub_status_module –with-http_gzip_static_module  –lock-path=/var/lock/nginx.lock  –http-client-body-temp-path=/var/tmp/nginx/client/  –http-proxy-temp-path=/var/tmp/nginx/proxy/    –http-fastcgi-temp-path=/var/tmp/nginx/fcgi/  –http-uwsgi-temp-path=/var/tmp/nginx/uwsgi  –http-scgi-temp-path=/var/tmp/nginx/scgi  </p>
 </blockquote>
 <h2 id="参数解释"><a href="#参数解释" class="headerlink" title="参数解释"></a>参数解释</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">$ ./configure \                    #nginx启动</div><div class="line">--prefix=/usr/local/nginx \             # 设定安装目录,默认使用 /usr/local/nginx。</div><div class="line">--sbin-path=/usr/local/nginx/nginx \    # 设置nginx的可执行文件的路径，默认为prefix/sbin/nginx.</div><div class="line">--conf-path=/etc/nginx/nginx.conf \     # 设置在nginx.conf配置文件的路径。nginx允许使用不同的配置文件启动，通过命令行中的-c选项。默认为prefix/conf/nginx.conf.</div><div class="line">--error-log-path=/var/log/nginx/error.log \     # 设置主错误，警告，和诊断文件的名称。安装完成后，可以随时改变的文件名 ，在nginx.conf配置文件中 使用 的error_log指令。默认情况下，文件名 为prefix/logs/error.log.</div><div class="line">--http-log-path=/var/log/nginx/access.log \     # 设置主请求的HTTP服务器的日志文件的名称。安装完成后，可以随时改变的文件名 ，在nginx.conf配置文件中 使用 的access_log指令。默认情况下，文件名 为prefix/logs/access.log.</div><div class="line">--pid-path=/var/run/nginx.pid \         # 设置nginx.pid文件，将存储的主进程的进程号。安装完成后，可以随时改变的文件名 ， 在nginx.conf配置文件中使用 PID指令。默认情况下，文件名 为prefix/logs/nginx.pid.</div><div class="line">--lock-path=/var/run/nginx.lock \       # 设定lock文件(nginx.lock)目录</div><div class="line">--http-client-body-temp-path=/var/cache/nginx/client_temp \ # 设置客户端请求临时文件路径</div><div class="line">--http-proxy-temp-path=/var/cache/nginx/proxy_temp \        # 设置http proxy临时文件路径</div><div class="line">--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp \    # 设置http fastcgi临时文件路径</div><div class="line">--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp \        # 设置路径存储http uwsgi临时文件路径</div><div class="line">--http-scgi-temp-path=/var/cache/nginx/scgi_temp \          # 设置路径存储http scgi临时文件路径</div><div class="line">--user=nginx \      #  设置nginx工作进程的用户。安装完成后，可以随时更改的名称在nginx.conf配置文件中 使用的 user指令。默认的用户名是nobody。</div><div class="line">--group=nginx \     # 设置nginx工作进程的用户组。安装完成后，可以随时更改的名称在nginx.conf配置文件中 使用的 user指令。默认的为非特权用户。</div><div class="line">--with-http_ssl_module \        # 使用https协议模块。默认情况下，该模块没有被构建。建立并运行此模块的OpenSSL库是必需的。</div><div class="line">--with-http_realip_module \     # 允许ngx_http_realip_module模块(mod_rpaf)</div><div class="line">--with-http_addition_module \   # ..模块(mod_layout)</div><div class="line">--with-http_sub_module \        # ..模块（允许用一些其他文本替换nginx响应中的一些文本）</div><div class="line">--with-http_dav_module \        # ..模块(mod_dav)（增加PUT,DELETE,MKCOL：创建集合,COPY和MOVE方法）默认情况下为关闭，需编译开启  </div><div class="line">--with-http_flv_module \        # ..(mod_flvx)</div><div class="line">--with-http_mp4_module \        # ..模块(mod_mp4)</div><div class="line">--with-http_gunzip_module \     # ..模块(mod_gunzip)</div><div class="line">--with-http_gzip_static_module \        # ..模块(mod_dflate)</div><div class="line">--with-http_random_index_module \       # ..模块(mod_autoindex)</div><div class="line">--with-http_secure_link_module \        # ..模块</div><div class="line">--with-http_stub_status_module \        # ..模块(mod_status)通过web界面查看时Nginx需要开启status模块</div><div class="line">--with-http_auth_request_module \       # 允许ngx_http_auth_request_module模块</div><div class="line">--with-http_xslt_module         # 允许ngx_http_xslt_module模块</div><div class="line">--with-mail \       # 允许POP3/IMAP4/SMTP代理模块</div><div class="line">--with-mail_ssl_module \        # 允许ngx_mail_ssl_module模块</div><div class="line">--with-file-aio \   # 允许文件AIO支持</div><div class="line">--with-ipv6 \       # 允许IP6代理支持</div><div class="line">--with-http_spdy_module \   # 允许ngx_http_spdy_module模块1.9.5开始要把把--with-http_spdy_module换成--with-http_v2_module，不然报错</div><div class="line">--with-cc-opt=&apos;-O2 -g -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic&apos;  # 设置C编译器参数</div><div class="line">--without-http_charset_module       # 不使用ngx_http_charset_module模块</div><div class="line">--without-http_gzip_module          # 不使用ngx_..模块</div><div class="line">--without-http_ssi_module           # 不使用ngx_..模块</div><div class="line">--without-http_userid_module        # 不使用ngx_..模块</div><div class="line">--without-http_access_module        # 不使用ngx_..模块</div><div class="line">--without-http_auth_basic_module    # 不使用ngx_..模块</div><div class="line">--without-http_autoindex_module     # 不使用ngx_..模块  </div><div class="line">--without-http_geo_module           # 不使用ngx_..模块  </div><div class="line">--without-http_map_module           # 不使用ngx_..模块</div><div class="line">--without-http_referer_module       # 不使用ngx_..模块</div><div class="line">--without-http_rewrite_module       # 不使用ngx_..模块</div><div class="line">--without-http_proxy_module         # 不使用ngx_..模块</div><div class="line">--without-http_fastcgi_module       # 不使用ngx_..模块</div><div class="line">--without-http_memcached_module     # 不使用ngx_..模块</div><div class="line">--without-http_limit_zone_module    # 不使用ngx_..模块</div><div class="line">--without-http_empty_gif_module     # 不使用ngx_..模块</div><div class="line">--without-http_browser_module       # 不使用ngx_..模块</div><div class="line">--without-http_upstream_ip_hash_module      # 不使用ngx_..模块</div><div class="line">--with-http_perl_module         # 允许ngx_..模块</div><div class="line">--with-perl_modules_path=PATH   # 设置perl模块路径</div><div class="line">--with-perl=PATH        # 设置perl库文件路径</div><div class="line">--http-log-path=PATH    # 设置access log文件路径</div><div class="line">--without-http          # 不使用HTTP server功能</div><div class="line">--without-mail_pop3_module      # 不允许ngx_..模块</div><div class="line">--without-mail_imap_module      # 不允许ngx_..模块</div><div class="line">--without-mail_smtp_module      # 不允许ngx_..模块</div><div class="line">--with-google_perftools_module      # 允许ngx_..模块(调试用)</div><div class="line">--with-cpp_test_module  # 允许ngx_..模块</div><div class="line">--add-module=PATH       # 允许使用外部模块,以及路径</div><div class="line">--with-cc=PATH          # 设置C编译器路径</div><div class="line">--with-cpp=PATH         # 设置C预处理路径</div><div class="line">--with-ld-opt=OPTIONS   # 设置连接文件参数</div><div class="line">--with-cpu-opt=CPU      # 为指定CPU优化,可选参数有:</div><div class="line">		  pentium, pentiumpro, pentium3, pentium4,</div><div class="line">		  athlon, opteron, sparc32, sparc64, ppc64</div><div class="line">--without-pcre          # 不使用pcre库文件</div><div class="line">--with-pcre=DIR         # 设定PCRE库路径</div><div class="line">--with-pcre-opt=OPTIONS # 设置PCRE运行参数</div><div class="line">--with-md5=DIR          # 设定md5库文件路径</div><div class="line">--with-md5-opt=OPTIONS  # 设置md5运行参数</div><div class="line">--with-md5-asm          # 使用md5源文件编译</div><div class="line">--with-sha1=DIR         # 设定sha1库文件路径</div><div class="line">--with-sha1-opt=OPTIONS # 设置sha1运行参数</div><div class="line">--with-sha1-asm         # 使用sha1源文件编译</div><div class="line">--with-zlib=DIR         # 设定zlib库文件路径</div><div class="line">--with-zlib-opt=OPTIONS # 设置zlib运行参数</div><div class="line">--with-zlib-asm=CPU     # 使zlib对特定的CPU进行优化,可选参数:</div><div class="line">		  pentium, pentiumpro</div><div class="line">--with-openssl=DIR      # 设定OpenSSL库文件路径</div><div class="line">--with-openssl-opt=OPTIONS  # 设置OpenSSL运行参数</div><div class="line">--with-debug            # 允许调试日志</div><div class="line">--builddir=DIR          # 设定程序编译目录</div><div class="line">--with-rtsig_module     # 允许rtsig模块</div><div class="line">--with-select_module    # 允许select模块(一种轮询模式,不推荐用在高载环境)</div><div class="line">--without-select_module # 不使用select模块</div><div class="line">--with-poll_module      # 允许poll模块(一种轮询模式,不推荐用在高载环境)</div><div class="line">--without-poll_module   # 不使用poll模块</div></pre></td></tr></table></figure>
 <h2 id="yum-nginx1-10版本默认参数"><a href="#yum-nginx1-10版本默认参数" class="headerlink" title="yum nginx1.10版本默认参数"></a>yum nginx1.10版本默认参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">--prefix=/usr/share/nginx \</div><div class="line">--sbin-path=/usr/sbin/nginx \</div><div class="line">--modules-path=/usr/lib64/nginx/modules \  </div><div class="line">--conf-path=/etc/nginx/nginx.conf \</div><div class="line">--error-log-path=/var/log/nginx/error.log \</div><div class="line">--http-log-path=/var/log/nginx/access.log \</div><div class="line">--http-client-body-temp-path=/var/lib/nginx/tmp/client_body \ </div><div class="line">--http-proxy-temp-path=/var/lib/nginx/tmp/proxy \</div><div class="line">--http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi \</div><div class="line">--http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi \</div><div class="line">--http-scgi-temp-path=/var/lib/nginx/tmp/scgi \</div><div class="line">--pid-path=/var/run/nginx.pid \</div><div class="line">--lock-path=/var/lock/subsys/nginx \</div><div class="line">--user=nginx \</div><div class="line">--group=nginx \</div><div class="line">--with-file-aio \</div><div class="line">--with-ipv6 \</div><div class="line">--with-http_ssl_module \</div><div class="line">--with-http_v2_module \</div><div class="line">--with-http_realip_module \</div><div class="line">--with-http_addition_module \</div><div class="line">--with-http_xslt_module=dynamic \</div><div class="line">--with-http_image_filter_module=dynamic \</div><div class="line">--with-http_geoip_module=dynamic \</div><div class="line">--with-http_sub_module \</div><div class="line">--with-http_dav_module \</div><div class="line">--with-http_flv_module \</div><div class="line">--with-http_mp4_module \</div><div class="line">--with-http_gunzip_module \</div><div class="line">--with-http_gzip_static_module \</div><div class="line">--with-http_random_index_module \</div><div class="line">--with-http_secure_link_module \</div><div class="line">--with-http_degradation_module \</div><div class="line">--with-http_slice_module \</div><div class="line">--with-http_stub_status_module \</div><div class="line">--with-http_perl_module=dynamic \</div><div class="line">--with-mail=dynamic \</div><div class="line">--with-mail_ssl_module \</div><div class="line">--with-pcre \</div><div class="line">--with-pcre-jit \</div><div class="line">--with-stream=dynamic \</div><div class="line">--with-stream_ssl_module \</div><div class="line">--with-debug \</div><div class="line">--with-cc-opt=&apos;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector \</div><div class="line">--param=ssp-buffer-size=4 -m64 -mtune=generic&apos; \</div><div class="line">--with-ld-opt=&apos; -Wl,-E&apos;</div></pre></td></tr></table></figure>
@@ -1314,174 +1873,6 @@ ls /usr/local/include   检查是否有pcre目录
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/01/17/centos6.5内核升级/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="红曳">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="红曳的Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/17/centos6.5内核升级/" itemprop="url">
-                  centos6内核升级
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-17T17:48:06+08:00">
-                2017-01-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>&emsp;为什么要升级？ 因为我要用docker，centos7版本已经使用了新内核版本<code>3.10.0-327.el7.x86_64</code>但是6版本内核还是<code>2.6.32-431.23.3.el6.x86_64</code>,如果你不想在centos7上应用docker，那么乖乖的升级centos6的内核吧，原因就是docker需要<code>3.8</code>以上版本才能正常安装。  </p>
-<h2 id="内核版本检查"><a href="#内核版本检查" class="headerlink" title="内核版本检查"></a>内核版本检查</h2><pre><code>[root@iZ2595dntnqZ ~]# uname -r
-2.6.32-431.23.3.el6.x86_64
-</code></pre><h2 id="public-key"><a href="#public-key" class="headerlink" title="public key"></a>public key</h2><pre><code>rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
-</code></pre><h2 id="安装ELRepo"><a href="#安装ELRepo" class="headerlink" title="安装ELRepo"></a>安装ELRepo</h2><pre><code>rpm -Uvh http://www.elrepo.org/elrepo-release-6-6.el6.elrepo.noarch.rpm
-</code></pre><h2 id="kernel说明"><a href="#kernel说明" class="headerlink" title="kernel说明"></a>kernel说明</h2><p>这里要说下，linux内核版本标记解释，先看下现在的内核版本  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">mainline:	4.10-rc4	2017-01-16	[tar.xz]	[pgp]	[patch]		[view diff]	[browse]	</div><div class="line">stable:	4.9.4	2017-01-15	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">stable:	4.8.17 [EOL]	2017-01-09	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	4.4.43	2017-01-15	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	4.1.37	2016-12-24	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	3.18.46	2016-12-24	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	3.16.39	2016-11-20	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	3.12.69	2016-12-17	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	3.10.104	2016-10-21	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	3.4.113	2016-10-26	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">longterm:	3.2.84	2016-11-20	[tar.xz]	[pgp]	[patch]	[inc. patch]	[view diff]	[browse]	[changelog]</div><div class="line">linux-next:	next-20170117	2017-01-17						[browse]</div></pre></td></tr></table></figure>
-<h3 id="mainline"><a href="#mainline" class="headerlink" title="mainline"></a>mainline</h3><p>当前官网的最新版本，周期性的在整合开发者贡献后发布新版本，  注意：新版本不一定就是能用的好版本！  </p>
-<h3 id="stable"><a href="#stable" class="headerlink" title="stable"></a>stable</h3><p>自然是稳定版了，mainline成熟时的版本，当被标记为EOL（End of line）时则表示该版本以后出现的BUG和漏洞不在被更新维护  </p>
-<h3 id="longterm"><a href="#longterm" class="headerlink" title="longterm"></a>longterm</h3><p>长期支持维护的版本，即Long Term Support，随时间推移当内核不在受到支持了也会被标记为EOL  </p>
-<h3 id="linux-next"><a href="#linux-next" class="headerlink" title="linux-next"></a>linux-next</h3><p>周期内生成的快照模式，为linux开发者用做测试  </p>
-<h2 id="安装longterm版本"><a href="#安装longterm版本" class="headerlink" title="安装longterm版本"></a>安装longterm版本</h2><pre><code>yum --enablerepo=elrepo-kernel install kernel-lt -y  
-</code></pre><p>编辑引导文件，修改顺序<br>    vim /etc/grub.conf  </p>
-<p>新安装的内核会排在第一位，即0位置，更改default值为0即可</p>
-<h2 id="reboot重启"><a href="#reboot重启" class="headerlink" title="reboot重启"></a>reboot重启</h2><p>查看内核版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# uname -r  </div><div class="line">3.10.104-1.el6.elrepo.x86_64`</div></pre></td></tr></table></figure></p>
-<p>参考资料：<a href="http://elrepo.org/tiki/tiki-index.php" target="_blank" rel="external">http://elrepo.org/tiki/tiki-index.php</a></p>
-<p>hello <a href="http://www.jjl1979.com/2017/01/17/centos6.5内核升级/">http://www.jjl1979.com/2017/01/17/centos6.5内核升级/</a> bye</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/01/17/docker安装和命令/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1683,475 +2074,13 @@ docker run  hello-world
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="红曳">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="红曳的Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/13/Hexo+Github搭建BLOG/" itemprop="url">
-                  Hexo+github搭建自己的BLOG
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-13T18:13:00+08:00">
-                2017-01-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>写在前面：</strong><br>&ensp;&ensp; 刚接触静态网页blog不久，在网上查了查，基本上有两种：jekyll和hexo，两者都支持markdown语法，可以在github上托管自己的网站，前者不被推荐应用在windows上，并且没有没有本地服务器，无法实现预览，而hexo刚好能满足上面的要求，并且简约的next主题我非常喜欢，所以尝试着应用了hexo，感觉不错，留作备用。</p>
-<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
-<li>安装git<br>  地址 <a href="https://git-scm.com/download/" target="_blank" rel="external">https://git-scm.com/download/</a>  </li>
-<li>安装node.JS<br>  下载：<a href="http://nodejs.org/download/" target="_blank" rel="external">http://nodejs.org/download/</a></li>
-</ul>
-<p>一般情况下，选择默认安装就可以了，安装之后可检查一下是否安装正确<br><img src="/2017/01/13/Hexo+Github搭建BLOG/git.png" alt=""> </p>
-<p>基本上环境已经建好了</p>
-<h2 id="hexo安装配置"><a href="#hexo安装配置" class="headerlink" title="hexo安装配置"></a>hexo安装配置</h2><p>先介绍一下常用命令</p>
-<pre><code>$ hexo n == hexo new#创建新文章
-$ hexo g == hexo generate   #生成静态文件
-$ hexo s == hexo server #本地服务器启动，可预览页面
-$ hexo d == hexo deploy #本地文件发布至github
-</code></pre><p>安装命令行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install -g hexo-cli</div></pre></td></tr></table></figure>
-<p>本地新建个文件夹hexo（自命名），之后右键选择Git Bash Here打开git命令窗口，依次执行如下命令：  </p>
-<pre><code>hexo init
-npm install
-hexo clean
-hexo g 
-hexo s
-执行完上面的命令，就可以访问本地站点了http://localhost:4000/
-
-hexo的git扩展插件
-npm install hexo-deployer-git --save
-</code></pre><p>显示如下页面<br><img src="/2017/01/13/Hexo+Github搭建BLOG/hexo.png" alt="">  </p>
-<p>hexo文件夹内容包括：  </p>
-<pre><code>hexo/
-  |- node_modules/  # hexo需要的模块，不需要上传GitHub  
-  |- themes/# 主题文件，需要上传GitHub的dev分支  
-  |- sources/   # 博文md文件，需要上传GitHub的dev分支  
-  |- public/# 生成的静态页面，由hexo deploy自动上传到gh-page分支  
-  |- package.json   # 记录hexo需要的包信息，不需要上传GitHub  
-  |- _config.yml# 全局配置文件，需要上传GitHub的dev分支  
-  |- .gitignore # hexo生成默认的.gitignore，它已经配置好了不需要上传的hexo文件  
-</code></pre><p>接下来还需要修改hexo配置文件<code>_config.yml</code>  </p>
-<pre><code># Hexo Configuration
-## Docs: https://hexo.io/docs/configuration.html
-## Source: https://github.com/hexojs/hexo/
-
-# Site
-title: Hexo
-subtitle:
-description:
-author: John Doe
-language:
-timezone:
-
-# URL
-## If your site is put in a subdirectory, set url as &apos;http://yoursite.com/child&apos; and root as &apos;/child/&apos;
-url: http://yoursite.com
-root: /
-permalink: :year/:month/:day/:title/
-permalink_defaults:
-
-# Directory
-source_dir: source
-public_dir: public
-tag_dir: tags
-archive_dir: archives
-category_dir: categories
-code_dir: downloads/code
-i18n_dir: :lang
-skip_render:
-
-# Writing
-new_post_name: :title.md # File name of new posts
-default_layout: post
-titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
-filename_case: 0
-render_drafts: false
-post_asset_folder: false
-relative_link: false
-future: true
-highlight:
-  enable: true
-  line_number: true
-  auto_detect: false
-  tab_replace:
-
-# Category &amp; Tag
-default_category: uncategorized
-category_map:
-tag_map:
-
-# Date / Time format
-## Hexo uses Moment.js to parse and display date
-## You can customize the date format as defined in
-## http://momentjs.com/docs/#/displaying/format/
-date_format: YYYY-MM-DD
-time_format: HH:mm:ss
-
-# Pagination
-## Set per_page to 0 to disable pagination
-per_page: 10
-pagination_dir: page
-
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: landscape
-
-# Deployment
-## Docs: https://hexo.io/docs/deployment.html
-deploy:
-  type:
-</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;最开始的部分这里可以根据个人意向进行调整，具体可参考<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">hexo配置文件</a>  </p>
-<p>&emsp;配置身份信息  </p>
-<pre><code>git config --global user.name &quot;yourname&quot;
-git config --global user.email &quot;youremail&quot;
-</code></pre><p>&emsp;现在hexo是3.0以上版本了，所以git要更改这里：</p>
-<pre><code># Deployment
-## Docs: https://hexo.io/docs/deployment.html
-deploy:
-&gt;   type: git
-&gt;   repo: git@github.com:wowchris/wochris.github.io.git
-&gt;   branch: master
-</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;在hexo目录命令行窗口输入：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo d</div></pre></td></tr></table></figure>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;此时github部署已经完成，<br>值得一提的是有时候上面的命令执行后会出现各种各样的问题，这时候也可以使用git命令行来完成部署。  </p>
-<pre><code>cd  hexo  
-git clone https://github.com/wowchris/wowchris.github.io.git .deploy/wochris.github.io
-mkdir .deploy  （存放clone code）
-
-vim deploy.sh
-复制下面内容到脚本里
-
-hexo generate
-cp -R public/* .deploy/wowchris.github.io
-cd .deploy/wowchris.github.io
-git add .
-git commit -m &quot;update&quot;
-git push origin master
-
----
-</code></pre><p>这里说一下：命令行方式获取和github上下载的zip文件没有区别，只是获取方式不同而已，看个人习惯了<br>每次部署时执行deploy.sh即可。</p>
-<h2 id="github部署配置"><a href="#github部署配置" class="headerlink" title="github部署配置"></a>github部署配置</h2><p>登陆github，注册一个用户，创建一个专门用来放置博客的仓库，Repository name命名格式为your_name.github.io，我的是wowchris.github.io,这样github仓库就算建好了，但是还没有内容。</p>
-<p><img src="/2017/01/13/Hexo+Github搭建BLOG/cangku.png" alt=""></p>
-<p>接下来配置ssh_key,在之前的终端里输入：</p>
-<pre><code>ssh-keygen -t rsa -C &quot;Github的注册邮箱地址&quot;
-</code></pre><p>几次enter之后，会生成两个文件<strong>id_rsa</strong>和<strong>id_rsa.pub</strong>，用notepad或者ultraedit之类的编辑器打开<strong>id_rsa.pub</strong>，复制里面的内容，打开你的github：<code>https://github.com/settings/keys</code>,新建一个ssh key，Title自己定义，将刚刚复制的内容粘贴到Key输入框，点击Add SSH key即可。<br><img src="/2017/01/13/Hexo+Github搭建BLOG/ssh.png" alt=""></p>
-<pre><code>ssh -T git@github.com
-</code></pre><p>&emsp;该命令会判断你的SSH是否配置好，如果出现 You’ve successfully authenticated的语句，证明SSH配置成功。  </p>
-<h2 id="配置BLOG域名"><a href="#配置BLOG域名" class="headerlink" title="配置BLOG域名"></a>配置BLOG域名</h2><p>当然了，前提是你要有自己的域名，比如我的：www.jjl1979.com,之后在github上你的博客仓库里点击<code>create a new file here</code>,    在github.io后面跟CNAME,edit file内容为你的域名<br><img src="/2017/01/13/Hexo+Github搭建BLOG/yuming.png" alt="">  </p>
-<p>确认提交后点击<strong>download zip</strong>下载，解压里面的CNAME文件到hexo的source目录下，之后登陆域名网站配置你的域名，我用的是阿里域名  </p>
-<p>github的主机地址：  </p>
-<pre><code>$192.30.252.153  
-$192.30.252.154
-</code></pre><p><strong>设置域名解析</strong><br><img src="/2017/01/13/Hexo+Github搭建BLOG/jiexi.png" alt="">  </p>
-<p>几分钟后，域名就可以正常访问了。  </p>
-<h2 id="hexo主题-next"><a href="#hexo主题-next" class="headerlink" title="hexo主题-next"></a>hexo主题-next</h2><p>搜了搜hexo的主题，最后选了hexo，原因就是因为它简洁，干净。</p>
-<p>首先cd到你的hexo目录<br>clone Next代码并存放到 themes/next 目录下</p>
-<pre><code>git clone https://github.com/iissnan/hexo-theme-next themes/next
-</code></pre><p>修改配置文件<code>_config.yml</code></p>
-<pre><code>theme: next
-</code></pre><p>这里有一点值得注意，hexo的配置文件在开头部分，如果应用了<code>next</code>主题，那么配置文件要改成这样：</p>
-<pre><code>language: zh-Hans
-timezone: Asia/Shanghai
-</code></pre><p>n每个主题都有自己的独立配置文件，路径为 your_hexo/thems/next，详细内容可参见<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">next文档说明</a></p>
-<h2 id="相关插件"><a href="#相关插件" class="headerlink" title="相关插件"></a>相关插件</h2><p><strong>1. hexo-asset-image-本地图片处理</strong><br>确认_config.yml中状态<code>post_asset_folder: true</code><br>在git bash中执行：  </p>
-<pre><code>npm install https://github.com/CodeFalling/hexo-asset-image --save
-</code></pre><p>在hexo/source/_posts下创建一个和md文件同名的文件夹，放进需要的图片，然后在md中插入：  </p>
-<pre><code>![](目录名/文件名.png)
-</code></pre><p>当图片路径配置完成后执行clean操作，避免出现路径错误情况  </p>
-<pre><code>$ hexo clean
-$ hexo generate
-$ hexo server
-</code></pre><p><strong>2. feed插件-RSS</strong></p>
-<pre><code>npm install hexo-generator-feed
-</code></pre><p>修改<code>_config.yml</code>，增加以下内容</p>
-<pre><code># Extensions
-Plugins:
-- hexo-generator-feed
-
-#Feed Atom
-feed:
-  type: atom
-  path: atom.xml
-  limit: 20
-</code></pre><p><strong>3. hexo-addlink-永久链接</strong><br>执行<code>git bash</code>进入你的blog目录</p>
-<pre><code>$ npm install hexo-addlink --save
-</code></pre><p>配置<code>_config.yml</code>文件，添加：</p>
-<pre><code>addlink:
-  before_text: hello # text before the post link
-  after_text: bye # text after the post link
-</code></pre><p>之后运行命令</p>
-<pre><code>$ hexo clean &amp;&amp; hexo g
-</code></pre><p><strong>4. hexo-generator-search-本地搜索</strong>  </p>
-<p> 执行命令：</p>
-<pre><code>npm install hexo-generator-search --save
-</code></pre><p>修改<code>_config.yml</code>文件，添加：</p>
-<pre><code>search:
-  path: search.xml
-  field: post
-</code></pre><p><strong>5. google-code-prettify-代码高亮</strong><br>这里借鉴了<a href="https://jmblog.github.io/color-themes-for-google-code-prettify/" target="_blank" rel="external">jmblog的google-code-prettify</a>，npm安装即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install color-themes-for-google-code-prettify</div></pre></td></tr></table></figure>
-<p>其他插件就不在列举了，有兴趣可以看hexo插件站：<a href="https://hexo.io/plugins/" target="_blank" rel="external">plugin</a></p>
-<p>hello <a href="http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/">http://www.jjl1979.com/2017/01/13/Hexo+Github搭建BLOG/</a> bye</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.jjl1979.com/2016/12/22/hello-world/">
-
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="红曳">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.jpg">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="红曳的Blog">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="红曳的Blog" src="">
-    </span>
-  </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/22/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-22T14:07:05+08:00">
-                2016-12-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-<p>hello <a href="http://www.jjl1979.com/2016/12/22/hello-world/">http://www.jjl1979.com/2016/12/22/hello-world/</a> bye</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2192,7 +2121,7 @@ feed:
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2201,7 +2130,7 @@ feed:
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2210,7 +2139,7 @@ feed:
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2275,6 +2204,7 @@ feed:
     NexT.Pisces
   </a>
 </div>
+
 
 
         
