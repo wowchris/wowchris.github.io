@@ -86,16 +86,19 @@
 
 
 
-<meta name="description" content="hello http://www.jjl1979.com/2017/03/09/nginx负载均衡/ bye">
+<meta name="description" content="方式及适用场景1、RR（默认）每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。例如：1234upstream tomcats &amp;#123;  server 10.1.1.107:88    server 10.1.1.132:80  &amp;#125;
+2、权重weight权重越高，处理几率越高，适用于服务器性能差异的情况1234upstream tomcats &amp;#">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx负载均衡">
 <meta property="og:url" content="http://www.jjl1979.com/2017/03/09/nginx负载均衡/index.html">
 <meta property="og:site_name" content="红曳的Blog">
-<meta property="og:description" content="hello http://www.jjl1979.com/2017/03/09/nginx负载均衡/ bye">
-<meta property="og:updated_time" content="2017-03-09T06:40:37.656Z">
+<meta property="og:description" content="方式及适用场景1、RR（默认）每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。例如：1234upstream tomcats &amp;#123;  server 10.1.1.107:88    server 10.1.1.132:80  &amp;#125;
+2、权重weight权重越高，处理几率越高，适用于服务器性能差异的情况1234upstream tomcats &amp;#">
+<meta property="og:updated_time" content="2017-03-31T08:34:16.060Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx负载均衡">
-<meta name="twitter:description" content="hello http://www.jjl1979.com/2017/03/09/nginx负载均衡/ bye">
+<meta name="twitter:description" content="方式及适用场景1、RR（默认）每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。例如：1234upstream tomcats &amp;#123;  server 10.1.1.107:88    server 10.1.1.132:80  &amp;#125;
+2、权重weight权重越高，处理几率越高，适用于服务器性能差异的情况1234upstream tomcats &amp;#">
 
 
 
@@ -375,7 +378,26 @@
       
 
       
-        <p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx负载均衡/">http://www.jjl1979.com/2017/03/09/nginx负载均衡/</a> bye</p>
+        <h2 id="方式及适用场景"><a href="#方式及适用场景" class="headerlink" title="方式及适用场景"></a>方式及适用场景</h2><h3 id="1、RR（默认）"><a href="#1、RR（默认）" class="headerlink" title="1、RR（默认）"></a>1、RR（默认）</h3><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream tomcats &#123;  </div><div class="line">server 10.1.1.107:88    </div><div class="line">server 10.1.1.132:80  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2、权重weight"><a href="#2、权重weight" class="headerlink" title="2、权重weight"></a>2、权重weight</h3><p>权重越高，处理几率越高，适用于服务器性能差异的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream tomcats &#123;  </div><div class="line">server 10.1.1.107:88 max_fails=3 fail_timeout=3s weight=3;    </div><div class="line">server 10.1.1.132:80 max_fails=3 fail_timeout=3s weight=6;   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3、ip-hash"><a href="#3、ip-hash" class="headerlink" title="3、ip_hash"></a>3、ip_hash</h3><p>每个请求按访问ip的hash结果分配，访客固定到后端服务器，可以解决session的问题。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">upstream tomcats &#123;  </div><div class="line">ip_hash;  </div><div class="line">server 10.1.1.107:88;  </div><div class="line">server 10.1.1.132:80;  </div><div class="line">&#125;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="4、fair（第三方）"><a href="#4、fair（第三方）" class="headerlink" title="4、fair（第三方）"></a>4、fair（第三方）</h3><p> 按后端服务器的响应时间来分配请求，响应时间短的优先分配。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">upstream backserver &#123;</div><div class="line"> server server1;</div><div class="line"> server server2;</div><div class="line"> fair;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="upstream状态参数"><a href="#upstream状态参数" class="headerlink" title="upstream状态参数"></a>upstream状态参数</h2><ul>
+<li>down，表示当前的server暂时不参与负载均衡。</li>
+</ul>
+<ul>
+<li>backup，预留的备份机器。当其他所有的非backup机器出现故障或者忙的时候，才会请求backup机器，因此这台机器的压力最轻。</li>
+</ul>
+<ul>
+<li>max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。</li>
+</ul>
+<ul>
+<li>fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用。</li>
+</ul>
+<ul>
+<li>weight， 默认为1.weight越大，负载的权重就越大。</li>
+</ul>
+<p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx负载均衡/">http://www.jjl1979.com/2017/03/09/nginx负载均衡/</a> bye</p>
 
       
     </div>
@@ -469,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -533,6 +564,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#方式及适用场景"><span class="nav-number">1.</span> <span class="nav-text">方式及适用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、RR（默认）"><span class="nav-number">1.1.</span> <span class="nav-text">1、RR（默认）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、权重weight"><span class="nav-number">1.2.</span> <span class="nav-text">2、权重weight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、ip-hash"><span class="nav-number">1.3.</span> <span class="nav-text">3、ip_hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、fair（第三方）"><span class="nav-number">1.4.</span> <span class="nav-text">4、fair（第三方）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upstream状态参数"><span class="nav-number">2.</span> <span class="nav-text">upstream状态参数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

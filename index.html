@@ -664,7 +664,26 @@
       
         
           
-            <p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx负载均衡/">http://www.jjl1979.com/2017/03/09/nginx负载均衡/</a> bye</p>
+            <h2 id="方式及适用场景"><a href="#方式及适用场景" class="headerlink" title="方式及适用场景"></a>方式及适用场景</h2><h3 id="1、RR（默认）"><a href="#1、RR（默认）" class="headerlink" title="1、RR（默认）"></a>1、RR（默认）</h3><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream tomcats &#123;  </div><div class="line">server 10.1.1.107:88    </div><div class="line">server 10.1.1.132:80  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2、权重weight"><a href="#2、权重weight" class="headerlink" title="2、权重weight"></a>2、权重weight</h3><p>权重越高，处理几率越高，适用于服务器性能差异的情况<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">upstream tomcats &#123;  </div><div class="line">server 10.1.1.107:88 max_fails=3 fail_timeout=3s weight=3;    </div><div class="line">server 10.1.1.132:80 max_fails=3 fail_timeout=3s weight=6;   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3、ip-hash"><a href="#3、ip-hash" class="headerlink" title="3、ip_hash"></a>3、ip_hash</h3><p>每个请求按访问ip的hash结果分配，访客固定到后端服务器，可以解决session的问题。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">upstream tomcats &#123;  </div><div class="line">ip_hash;  </div><div class="line">server 10.1.1.107:88;  </div><div class="line">server 10.1.1.132:80;  </div><div class="line">&#125;  &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="4、fair（第三方）"><a href="#4、fair（第三方）" class="headerlink" title="4、fair（第三方）"></a>4、fair（第三方）</h3><p> 按后端服务器的响应时间来分配请求，响应时间短的优先分配。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">upstream backserver &#123;</div><div class="line"> server server1;</div><div class="line"> server server2;</div><div class="line"> fair;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="upstream状态参数"><a href="#upstream状态参数" class="headerlink" title="upstream状态参数"></a>upstream状态参数</h2><ul>
+<li>down，表示当前的server暂时不参与负载均衡。</li>
+</ul>
+<ul>
+<li>backup，预留的备份机器。当其他所有的非backup机器出现故障或者忙的时候，才会请求backup机器，因此这台机器的压力最轻。</li>
+</ul>
+<ul>
+<li>max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream 模块定义的错误。</li>
+</ul>
+<ul>
+<li>fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用。</li>
+</ul>
+<ul>
+<li>weight， 默认为1.weight越大，负载的权重就越大。</li>
+</ul>
+<p>hello <a href="http://www.jjl1979.com/2017/03/09/nginx负载均衡/">http://www.jjl1979.com/2017/03/09/nginx负载均衡/</a> bye</p>
 
           
         
@@ -1041,7 +1060,7 @@ events{
 <blockquote>
 <p>set key1 val1<br>get key1</p>
 </blockquote>
-<h2 id="主从集群配置"><a href="#主从集群配置" class="headerlink" title="主从集群配置"></a>主从集群配置</h2><p>hello <a href="http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/">http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/</a> bye</p>
+<p>hello <a href="http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/">http://www.jjl1979.com/2017/03/07/redis安装以及php扩展/</a> bye</p>
 
           
         
